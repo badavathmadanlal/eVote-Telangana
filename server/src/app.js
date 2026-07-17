@@ -51,11 +51,12 @@ app.get('/api/health', (_req, res) => {
 
 import authRoutes from './routes/auth.routes.js';
 import citizenRoutes from './routes/citizen.routes.js';
+import electionRoutes from './routes/election.routes.js';
 
 // API Routes
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/citizens', citizenRoutes);
-// app.use('/api/v1/elections', electionRoutes);
+app.use('/api/v1/elections', electionRoutes);
 // app.use('/api/v1/votes', voteRoutes);
 
 // 404 Handler
