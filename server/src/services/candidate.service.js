@@ -11,9 +11,9 @@ class CandidateService {
       throw new ApiError(HTTP_STATUS.NOT_FOUND, 'Election not found');
     }
 
-    // 2. Election must not be COMPLETED
-    if (election.status === 'COMPLETED') {
-      throw new ApiError(HTTP_STATUS.BAD_REQUEST, 'Cannot add candidate to a completed election');
+    // 2. Election must not be ACTIVE
+    if (election.status === 'ACTIVE') {
+      throw new ApiError(HTTP_STATUS.BAD_REQUEST, 'Cannot add candidate to an active election');
     }
 
     // 3. Candidate constituency must match Election constituency
@@ -76,8 +76,8 @@ class CandidateService {
         throw new ApiError(HTTP_STATUS.NOT_FOUND, 'Target election not found');
       }
 
-      if (election.status === 'COMPLETED') {
-        throw new ApiError(HTTP_STATUS.BAD_REQUEST, 'Cannot move candidate to a completed election');
+      if (election.status === 'ACTIVE') {
+        throw new ApiError(HTTP_STATUS.BAD_REQUEST, 'Cannot move candidate to an active election');
       }
 
       if (targetConstituency !== election.constituency) {
@@ -104,10 +104,18 @@ class CandidateService {
   }
 
   async deleteCandidate(id) {
-    const candidate = await candidateRepository.deleteCandidate(id);
+    const candidate = await candidateRepository.getCandidateById(id);
     if (!candidate) {
       throw new ApiError(HTTP_STATUS.NOT_FOUND, 'Candidate not found');
     }
+    
+    // Prevent delete if election is ACTIVE
+    const election = await electionRepository.getElectionById(candidate.electionId);
+    if (election && election.status === 'ACTIVE') {
+      throw new ApiError(HTTP_STATUS.BAD_REQUEST, 'Cannot delete candidate from an active election');
+    }
+
+    await candidateRepository.deleteCandidate(id);
     return candidate;
   }
 }

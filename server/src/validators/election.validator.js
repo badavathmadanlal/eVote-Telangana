@@ -33,3 +33,11 @@ export const electionValidator = [
     .isISO8601()
     .withMessage('End date must be a valid ISO 8601 date string'),
 ];
+
+export const updateStatusValidator = [
+  check('status')
+    .notEmpty()
+    .withMessage('Status is required')
+    .isIn(['INACTIVE', 'ACTIVE'])
+    .withMessage('Status must be either INACTIVE or ACTIVE'),
+];

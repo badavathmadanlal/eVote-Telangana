@@ -29,6 +29,11 @@ class ElectionController {
     return ApiResponse.success(res, 'Election updated successfully', { election });
   }
 
+  async updateElectionStatus(req, res) {
+    const election = await electionService.updateElectionStatus(req.params.id, req.body.status);
+    return ApiResponse.success(res, 'Election status updated successfully', { election });
+  }
+
   async deleteElection(req, res) {
     const election = await electionService.deleteElection(req.params.id);
     return ApiResponse.success(res, 'Election deleted successfully', { election });

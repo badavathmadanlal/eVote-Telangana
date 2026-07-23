@@ -1,6 +1,6 @@
 import express from 'express';
 import electionController from '../controllers/election.controller.js';
-import { electionValidator } from '../validators/election.validator.js';
+import { electionValidator, updateStatusValidator } from '../validators/election.validator.js';
 import validate from '../middlewares/validate.js';
 import { protect, authorize } from '../middlewares/auth.middleware.js';
 import asyncHandler from '../utils/asyncHandler.js';
@@ -25,6 +25,14 @@ router.put(
   electionValidator, // Assuming we validate the full payload on update too
   validate,
   asyncHandler(electionController.updateElection)
+);
+
+router.patch(
+  '/:id/status',
+  authorize('admin'),
+  updateStatusValidator,
+  validate,
+  asyncHandler(electionController.updateElectionStatus)
 );
 
 router.delete(
