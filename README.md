@@ -14,7 +14,7 @@ An enterprise-grade, full-stack remote voting platform built with modern web tec
 - [Environment Variables](#environment-variables)
 - [Available Scripts](#available-scripts)
 - [API Documentation](#api-documentation)
-- [Architecture](#architecture)
+- [Architecture](#architecture)  
 - [Contributing](#contributing)
 - [License](#license)
 
