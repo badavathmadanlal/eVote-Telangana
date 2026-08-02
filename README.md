@@ -44,7 +44,7 @@ The Remote Voting System enables organizations to conduct secure remote election
 | React Router DOM | Client-side routing        |
 | Axios            | HTTP client                |
 
-### Backend
+### Backend 
 | Technology       | Purpose                    |
 |----------------- |--------------------------- |
 | Node.js          | Runtime environment        |
