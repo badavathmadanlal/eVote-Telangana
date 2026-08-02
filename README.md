@@ -257,7 +257,7 @@ GET /api/health
 
 ### Standard API Response Format
 
-**Success:**
+**Success:** 
 ```json
 {
   "success": true,
