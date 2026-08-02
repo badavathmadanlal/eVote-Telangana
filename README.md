@@ -6,7 +6,7 @@ An enterprise-grade, full-stack remote voting platform built with modern web tec
 
 ## 📋 Table of Contents
 
-- [Overview](#overview)
+- [Overview](#overview) 
 - [Technology Stack](#technology-stack)
 - [Project Structure](#project-structure)
 - [Prerequisites](#prerequisites)
