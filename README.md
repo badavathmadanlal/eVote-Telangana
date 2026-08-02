@@ -9,7 +9,7 @@ An enterprise-grade, full-stack remote voting platform built with modern web tec
 - [Overview](#overview) 
 - [Technology Stack](#technology-stack)
 - [Project Structure](#project-structure)
-- [Prerequisites](#prerequisites)
+- [Prerequisites](#prerequisites) 
 - [Getting Started](#getting-started)
 - [Environment Variables](#environment-variables)
 - [Available Scripts](#available-scripts)
