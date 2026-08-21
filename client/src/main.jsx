@@ -1,13 +1,15 @@
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
 import './index.css';
+import { AuthProvider } from './contexts/AuthContext.jsx';
+import { Toaster } from 'react-hot-toast';
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <BrowserRouter>
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <AuthProvider>
       <App />
-    </BrowserRouter>
-  </StrictMode>
+      <Toaster position="top-right" />
+    </AuthProvider>
+  </React.StrictMode>,
 );

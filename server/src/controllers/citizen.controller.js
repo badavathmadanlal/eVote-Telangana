@@ -46,6 +46,16 @@ class CitizenController {
 
     return ApiResponse.success(res, 'Citizen profile updated successfully', { profile: updatedProfile });
   }
+
+  /**
+   * @desc    Get all citizens (Admin)
+   * @route   GET /api/v1/citizens/all
+   * @access  Private/Admin
+   */
+  async getAllCitizens(req, res) {
+    const citizens = await citizenService.getAllCitizens(req.query);
+    return ApiResponse.success(res, 'Citizens retrieved successfully', { citizens });
+  }
 }
 
 export default new CitizenController();

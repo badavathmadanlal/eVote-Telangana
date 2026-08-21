@@ -56,6 +56,15 @@ class CitizenRepository {
     });
     return newCitizen;
   }
+
+  /**
+   * Get all citizens (for admin)
+   * @param {Object} query 
+   * @returns {Promise<Array>}
+   */
+  async getAllCitizens(query = {}) {
+    return Citizen.find(query).populate('citizenMasterId').populate('userId', 'firstName lastName email mobileNumber').sort({ verifiedAt: -1 });
+  }
 }
 
 export default new CitizenRepository();

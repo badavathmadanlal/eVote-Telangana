@@ -28,6 +28,13 @@ const userSchema = new mongoose.Schema(
         'Please provide a valid email address',
       ],
     },
+    mobileNumber: {
+      type: String,
+      unique: true,
+      sparse: true,
+      trim: true,
+      match: [/^[6-9]\d{9}$/, 'Please provide a valid 10-digit Indian mobile number'],
+    },
     password: {
       type: String,
       required: [true, 'Password is required'],
@@ -40,6 +47,10 @@ const userSchema = new mongoose.Schema(
       default: 'voter',
     },
     isEmailVerified: {
+      type: Boolean,
+      default: false,
+    },
+    isMobileVerified: {
       type: Boolean,
       default: false,
     },

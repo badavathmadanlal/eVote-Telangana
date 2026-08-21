@@ -63,6 +63,15 @@ class CitizenService {
     const updatedCitizen = await citizenRepository.updateCitizen(citizen._id, updateData);
     return updatedCitizen;
   }
+
+  /**
+   * Get all citizens for Admin
+   * @param {Object} query 
+   * @returns {Promise<Array>}
+   */
+  async getAllCitizens(query = {}) {
+    return citizenRepository.getAllCitizens(query);
+  }
 }
 
 export default new CitizenService();

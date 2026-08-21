@@ -2,7 +2,7 @@ import express from 'express';
 import citizenController from '../controllers/citizen.controller.js';
 import { verifyCitizenValidator, updateProfileValidator } from '../validators/citizen.validator.js';
 import validate from '../middlewares/validate.js';
-import { protect } from '../middlewares/auth.middleware.js';
+import { protect, authorize } from '../middlewares/auth.middleware.js';
 import asyncHandler from '../utils/asyncHandler.js';
 
 const router = express.Router();
@@ -36,6 +36,15 @@ router.put(
   updateProfileValidator,
   validate,
   asyncHandler(citizenController.updateProfile)
+);
+
+// @route   GET /api/v1/citizens/all
+// @desc    Get all citizens
+// @access  Private/Admin
+router.get(
+  '/all',
+  authorize('admin'),
+  asyncHandler(citizenController.getAllCitizens)
 );
 
 export default router;

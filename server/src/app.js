@@ -54,6 +54,13 @@ import citizenRoutes from './routes/citizen.routes.js';
 import electionRoutes from './routes/election.routes.js';
 import candidateRoutes from './routes/candidate.routes.js';
 import voteRoutes from './routes/vote.routes.js';
+import resultRoutes from './routes/result.routes.js';
+import dashboardRoutes from './routes/dashboard.routes.js';
+import contactRoutes from './routes/contact.routes.js';
+import faqRoutes from './routes/faq.routes.js';
+import announcementRoutes from './routes/announcement.routes.js';
+import assistantRoutes from './routes/assistant.routes.js';
+import auditLogRoutes from './routes/auditLog.routes.js';
 
 // API Routes
 app.use('/api/v1/auth', authRoutes);
@@ -61,6 +68,13 @@ app.use('/api/v1/citizens', citizenRoutes);
 app.use('/api/v1/elections', electionRoutes);
 app.use('/api/v1/candidates', candidateRoutes);
 app.use('/api/v1/votes', voteRoutes);
+app.use('/api/v1/results', resultRoutes);
+app.use('/api/v1/dashboard', dashboardRoutes);
+app.use('/api/v1/contact', contactRoutes);
+app.use('/api/v1/faqs', faqRoutes);
+app.use('/api/v1/announcements', announcementRoutes);
+app.use('/api/v1/assistant', assistantRoutes);
+app.use('/api/v1/audit-logs', auditLogRoutes);
 
 // 404 Handler
 app.use(notFound);
