@@ -258,6 +258,41 @@ eVote-Telangana/
 └── README.md
 ```
 
+---
+
+## 🖼️ Screenshots
+
+<table>
+  <tr>
+    <td align="center"><b>Home</b></td>
+    <td align="center"><b>Login / Register</b></td>
+  </tr>
+  <tr>
+    <td><img src="docs/assets/screenshots/Home.png" alt="Home Screen" width="400"/></td>
+    <td><img src="docs/assets/screenshots/Login.png" alt="Login Screen" width="400"/></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Citizen Dashboard</b></td>
+    <td align="center"><b>Voting Ballot</b></td>
+  </tr>
+  <tr>
+    <td><img src="docs/assets/screenshots/Citizen_Dashboard.png" alt="Citizen Dashboard" width="400"/></td>
+    <td><img src="docs/assets/screenshots/Ballot.png" alt="Voting Ballot" width="400"/></td>
+  </tr>
+  <tr>
+    <td align="center"><b>AI Assistant</b></td>
+    <td align="center"><b>Admin Dashboard</b></td>
+  </tr>
+  <tr>
+    <td><img src="docs/assets/screenshots/AI_Assistant.png" alt="AI Assistant" width="400"/></td>
+    <td><img src="docs/assets/screenshots/Admin_Dashboard.png" alt="Admin Dashboard" width="400"/></td>
+  </tr>
+</table>
+
+*(Note: If screenshots are not rendering, verify the `docs/assets/screenshots/` paths exist in the repository).*
+
+---
+
 ## 🎥 Demo Video
 
 [![eVote Demo](https://img.youtube.com/vi/z5MCXY6QFm8/maxresdefault.jpg)](https://youtu.be/z5MCXY6QFm8)
@@ -367,7 +402,6 @@ VITE_API_BASE_URL=http://localhost:5000/api
 
 🎓 **B.Tech — Computer Science & Engineering**  
 🏫 **National Institute of Technology, Silchar**  
- 
 
 [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/badavathmadanlal)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/badavathmadanlal/)
