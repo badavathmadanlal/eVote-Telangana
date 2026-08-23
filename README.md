@@ -209,3 +209,11 @@ The complete citizen voting journey is designed as:
 ┌─────────────────────┐
 │   ELECTION RESULTS  │
 └─────────────────────┘
+```
+## 🎥 Live Demo
+
+▶️ **Watch the complete eVoter application walkthrough**
+
+[![eVoter Demo](https://img.youtube.com/vi/z5MCXY6QFm8/maxresdefault.jpg)](https://youtu.be/z5MCXY6QFm8)
+
+**Demo flow:** Login → Verification → Election → Ballot → Vote → Receipt → History → Results
