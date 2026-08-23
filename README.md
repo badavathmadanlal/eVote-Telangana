@@ -268,24 +268,53 @@ eVote-Telangana/
     <td align="center"><b>Login / Register</b></td>
   </tr>
   <tr>
-    <td><img src="docs/assets/screenshots/Home.png" alt="Home Screen" width="400"/></td>
-    <td><img src="docs/assets/screenshots/Login.png" alt="Login Screen" width="400"/></td>
+    <td><img src="docs/assets/screenshots/Home.png" alt="Home" width="500"/></td>
+    <td><img src="docs/assets/screenshots/Login.png" alt="Login / Register" width="500"/></td>
   </tr>
+
   <tr>
     <td align="center"><b>Citizen Dashboard</b></td>
     <td align="center"><b>Voting Ballot</b></td>
   </tr>
   <tr>
-    <td><img src="docs/assets/screenshots/Citizen_Dashboard.png" alt="Citizen Dashboard" width="400"/></td>
-    <td><img src="docs/assets/screenshots/Ballot.png" alt="Voting Ballot" width="400"/></td>
+    <td><img src="docs/assets/screenshots/Citizen-Dashboard.png" alt="Citizen Dashboard" width="500"/></td>
+    <td><img src="docs/assets/screenshots/Ballot.png" alt="Voting Ballot" width="500"/></td>
   </tr>
+
   <tr>
     <td align="center"><b>AI Assistant</b></td>
-    <td align="center"><b>Admin Dashboard</b></td>
+    <td align="center"><b>Election Results</b></td>
   </tr>
   <tr>
-    <td><img src="docs/assets/screenshots/AI_Assistant.png" alt="AI Assistant" width="400"/></td>
-    <td><img src="docs/assets/screenshots/Admin_Dashboard.png" alt="Admin Dashboard" width="400"/></td>
+    <td><img src="docs/assets/screenshots/AI-Assistant.png" alt="AI Assistant" width="500"/></td>
+    <td><img src="docs/assets/screenshots/Results.png" alt="Election Results" width="500"/></td>
+  </tr>
+
+  <tr>
+    <td align="center"><b>KYC / Verification</b></td>
+    <td align="center"><b>Voting History</b></td>
+  </tr>
+  <tr>
+    <td><img src="docs/assets/screenshots/Kyc.png" alt="KYC Verification" width="500"/></td>
+    <td><img src="docs/assets/screenshots/Voting-History.png" alt="Voting History" width="500"/></td>
+  </tr>
+
+  <tr>
+    <td align="center"><b>Vote Success</b></td>
+    <td align="center"><b>Already Cast Vote</b></td>
+  </tr>
+  <tr>
+    <td><img src="docs/assets/screenshots/Vote-Success.png" alt="Vote Success" width="500"/></td>
+    <td><img src="docs/assets/screenshots/Vote-Already-Cast.png" alt="Already Cast Vote" width="500"/></td>
+  </tr>
+
+  <tr>
+    <td align="center"><b>Elections</b></td>
+    <td align="center"></td>
+  </tr>
+  <tr>
+    <td><img src="docs/assets/screenshots/Elections.png" alt="Elections" width="500"/></td>
+    <td></td>
   </tr>
 </table>
 
