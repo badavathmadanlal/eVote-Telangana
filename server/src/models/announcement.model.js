@@ -14,13 +14,23 @@ const announcementSchema = new mongoose.Schema(
     },
     category: {
       type: String,
-      enum: ['Election', 'General', 'Security', 'Maintenance', 'Emergency'],
-      default: 'General',
+      default: 'ELECTION UPDATE',
       required: true,
+      trim: true,
+    },
+    issuer: {
+      type: String,
+      default: 'State Election Commission',
+      trim: true,
+    },
+    state: {
+      type: String,
+      default: 'All',
+      trim: true,
     },
     isPublished: {
       type: Boolean,
-      default: false,
+      default: true,
     },
     isPinned: {
       type: Boolean,

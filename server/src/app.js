@@ -2,7 +2,6 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
-import rateLimit from 'express-rate-limit';
 
 import envConfig from './config/env.js';
 import corsOptions from './config/cors.js';
@@ -10,6 +9,7 @@ import morganConfig from './config/morgan.js';
 import errorHandler from './middlewares/errorHandler.js';
 import notFound from './middlewares/notFound.js';
 import ApiResponse from './utils/ApiResponse.js';
+import { globalLimiter } from './middlewares/rateLimiter.js';
 
 const app = express();
 
@@ -17,23 +17,13 @@ const app = express();
 app.use(helmet());
 app.use(cors(corsOptions));
 
-// Rate Limiting
-const limiter = rateLimit({
-  windowMs: envConfig.RATE_LIMIT_WINDOW_MS,
-  max: envConfig.RATE_LIMIT_MAX,
-  message: {
-    success: false,
-    message: 'Too many requests, please try again later',
-  },
-  standardHeaders: true,
-  legacyHeaders: false,
-});
-app.use('/api', limiter);
-
-// Request Parsing
+// Request Parsing (must be before rate limiting so req.body is accessible)
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(cookieParser());
+
+// Rate Limiting
+app.use('/api', globalLimiter);
 
 // Logging
 const morganMiddleware =
@@ -61,6 +51,7 @@ import faqRoutes from './routes/faq.routes.js';
 import announcementRoutes from './routes/announcement.routes.js';
 import assistantRoutes from './routes/assistant.routes.js';
 import auditLogRoutes from './routes/auditLog.routes.js';
+import aiRoutes from './routes/ai.routes.js';
 
 // API Routes
 app.use('/api/v1/auth', authRoutes);
@@ -75,6 +66,7 @@ app.use('/api/v1/faqs', faqRoutes);
 app.use('/api/v1/announcements', announcementRoutes);
 app.use('/api/v1/assistant', assistantRoutes);
 app.use('/api/v1/audit-logs', auditLogRoutes);
+app.use('/api/v1/ai', aiRoutes);
 
 // 404 Handler
 app.use(notFound);

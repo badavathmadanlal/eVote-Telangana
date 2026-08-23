@@ -1,4 +1,4 @@
-import dotenv from 'dotenv';
+﻿import dotenv from 'dotenv';
 dotenv.config();
 
 const envConfig = Object.freeze({
@@ -10,6 +10,19 @@ const envConfig = Object.freeze({
   CORS_ORIGIN: process.env.CORS_ORIGIN || 'http://localhost:5173',
   RATE_LIMIT_WINDOW_MS: parseInt(process.env.RATE_LIMIT_WINDOW_MS, 10) || 900000,
   RATE_LIMIT_MAX: parseInt(process.env.RATE_LIMIT_MAX, 10) || 100,
+
+  // SMS Gateway Configuration (Fast2SMS Smart OTP)
+  SMS_PROVIDER: process.env.SMS_PROVIDER || 'fast2sms',
+  FAST2SMS_API_KEY: process.env.FAST2SMS_API_KEY || '',
+  FAST2SMS_OTP_ID: process.env.FAST2SMS_OTP_ID || '',
+
+  // Fallback Twilio / MSG91 Configuration
+  TWILIO_ACCOUNT_SID: process.env.TWILIO_ACCOUNT_SID || '',
+  TWILIO_AUTH_TOKEN: process.env.TWILIO_AUTH_TOKEN || '',
+  TWILIO_PHONE_NUMBER: process.env.TWILIO_PHONE_NUMBER || '',
+  MSG91_AUTH_KEY: process.env.MSG91_AUTH_KEY || '',
+  MSG91_SENDER_ID: process.env.MSG91_SENDER_ID || 'EVOTE',
+  MSG91_TEMPLATE_ID: process.env.MSG91_TEMPLATE_ID || '',
 });
 
 export default envConfig;

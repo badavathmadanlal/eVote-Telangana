@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 // Layouts
@@ -16,6 +16,7 @@ import HomePage from '../pages/public/HomePage';
 import AboutPage from '../pages/public/AboutPage';
 import AnnouncementsPage from '../pages/public/AnnouncementsPage';
 import ElectionsInfoPage from '../pages/public/ElectionsInfoPage';
+import StateElectionPage from '../pages/public/StateElectionPage';
 import ResultsPage from '../pages/public/ResultsPage';
 import FaqPage from '../pages/public/FaqPage';
 import ContactPage from '../pages/public/ContactPage';
@@ -39,22 +40,24 @@ import CitizenAnnouncements from '../pages/citizen/CitizenAnnouncements';
 
 // Admin Pages
 import AdminDashboard from '../pages/admin/AdminDashboard';
-import AdminUsers from '../pages/admin/AdminUsers';
 import AdminCitizens from '../pages/admin/AdminCitizens';
 import AdminElections from '../pages/admin/AdminElections';
 import AdminCandidates from '../pages/admin/AdminCandidates';
+import AdminLiveVoting from '../pages/admin/AdminLiveVoting';
 import AdminResults from '../pages/admin/AdminResults';
-import AdminAnalytics from '../pages/admin/AdminAnalytics';
 import AdminAnnouncements from '../pages/admin/AdminAnnouncements';
+import AdminAuditLogs from '../pages/admin/AdminAuditLogs';
+import AdminUsers from '../pages/admin/AdminUsers';
+import AdminAnalytics from '../pages/admin/AdminAnalytics';
 import AdminContacts from '../pages/admin/AdminContacts';
 import AdminFaqs from '../pages/admin/AdminFaqs';
 
 // AI Widget
-import FloatingChatWidget from '../components/ai/FloatingChatWidget';
+import AIElectionAssistant from '../components/ai/AIElectionAssistant';
 
 const AppRoutes = () => (
   <BrowserRouter>
-    <FloatingChatWidget />
+    <AIElectionAssistant />
     <Routes>
       {/* Public */}
       <Route element={<PublicLayout />}>
@@ -62,6 +65,7 @@ const AppRoutes = () => (
         <Route path="/about" element={<AboutPage />} />
         <Route path="/announcements" element={<AnnouncementsPage />} />
         <Route path="/elections" element={<ElectionsInfoPage />} />
+        <Route path="/elections/:stateId" element={<StateElectionPage />} />
         <Route path="/results" element={<ResultsPage />} />
         <Route path="/faq" element={<FaqPage />} />
         <Route path="/contact" element={<ContactPage />} />
@@ -82,21 +86,26 @@ const AppRoutes = () => (
         <Route path="/citizen/elections" element={<CitizenElections />} />
         <Route path="/citizen/elections/:id" element={<CitizenElectionDetails />} />
         <Route path="/citizen/elections/:id/vote" element={<CitizenVote />} />
+        <Route path="/citizen/vote/:id" element={<CitizenVote />} />
         <Route path="/citizen/vote-success" element={<VoteSuccess />} />
         <Route path="/citizen/history" element={<VotingHistory />} />
+        <Route path="/citizen/voting-history" element={<VotingHistory />} />
         <Route path="/citizen/announcements" element={<CitizenAnnouncements />} />
       </Route>
 
       {/* Admin Protected */}
       <Route element={<RoleProtectedRoute allowedRoles={['admin']}><AdminLayout /></RoleProtectedRoute>}>
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
-        <Route path="/admin/users" element={<AdminUsers />} />
         <Route path="/admin/citizens" element={<AdminCitizens />} />
+        <Route path="/admin/voters" element={<AdminCitizens />} />
         <Route path="/admin/elections" element={<AdminElections />} />
         <Route path="/admin/candidates" element={<AdminCandidates />} />
+        <Route path="/admin/live-voting" element={<AdminLiveVoting />} />
         <Route path="/admin/results" element={<AdminResults />} />
-        <Route path="/admin/analytics" element={<AdminAnalytics />} />
         <Route path="/admin/announcements" element={<AdminAnnouncements />} />
+        <Route path="/admin/audit-logs" element={<AdminAuditLogs />} />
+        <Route path="/admin/users" element={<AdminUsers />} />
+        <Route path="/admin/analytics" element={<AdminAnalytics />} />
         <Route path="/admin/contacts" element={<AdminContacts />} />
         <Route path="/admin/faqs" element={<AdminFaqs />} />
       </Route>

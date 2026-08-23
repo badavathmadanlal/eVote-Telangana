@@ -12,10 +12,14 @@ import {
 import validate from '../middlewares/validate.js';
 import asyncHandler from '../utils/asyncHandler.js';
 
+import { authLimiter, otpLimiter } from '../middlewares/rateLimiter.js';
+import { protect, authorize } from '../middlewares/auth.middleware.js';
+
 const router = express.Router();
 
 router.post(
   '/register',
+  authLimiter,
   registerValidator,
   validate,
   asyncHandler(authController.register)
@@ -23,6 +27,7 @@ router.post(
 
 router.post(
   '/login',
+  authLimiter,
   loginValidator,
   validate,
   asyncHandler(authController.login)
@@ -30,6 +35,7 @@ router.post(
 
 router.post(
   '/login/otp',
+  otpLimiter,
   sendOtpValidator,
   validate,
   asyncHandler(authController.sendLoginOtp)
@@ -37,6 +43,7 @@ router.post(
 
 router.post(
   '/login/otp/verify',
+  authLimiter,
   verifyOtpValidator,
   validate,
   asyncHandler(authController.verifyLoginOtp)
@@ -63,7 +70,11 @@ router.post(
   asyncHandler(authController.resetPassword)
 );
 
-import { protect, authorize } from '../middlewares/auth.middleware.js';
+router.get(
+  '/me',
+  protect,
+  asyncHandler(authController.getMe)
+);
 
 router.get(
   '/users',

@@ -6,7 +6,11 @@ class AnnouncementRepository {
   }
 
   async getAllAnnouncements(query = {}) {
-    return Announcement.find(query).sort({ isPinned: -1, createdAt: -1 });
+    const filter = { ...query };
+    if (filter.state && filter.state !== 'All') {
+      filter.state = new RegExp(`^${filter.state.trim()}$`, 'i');
+    }
+    return Announcement.find(filter).sort({ isPinned: -1, updatedAt: -1, createdAt: -1 });
   }
 
   async getAnnouncementById(id) {

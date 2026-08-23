@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+﻿import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 
 const userSchema = new mongoose.Schema(
@@ -19,8 +19,8 @@ const userSchema = new mongoose.Schema(
     },
     email: {
       type: String,
-      required: [true, 'Email is required'],
       unique: true,
+      sparse: true,
       trim: true,
       lowercase: true,
       match: [
@@ -33,12 +33,54 @@ const userSchema = new mongoose.Schema(
       unique: true,
       sparse: true,
       trim: true,
-      match: [/^[6-9]\d{9}$/, 'Please provide a valid 10-digit Indian mobile number'],
+      match: [/^\d{10}$/, 'Please provide a valid 10-digit mobile number'],
+    },
+    aadhaar: {
+      type: String,
+      sparse: true,
+      trim: true,
+    },
+    epicNumber: {
+      type: String,
+      sparse: true,
+      trim: true,
+    },
+    state: {
+      type: String,
+      default: 'Telangana',
+      trim: true,
+    },
+    district: {
+      type: String,
+      default: 'Hyderabad',
+      trim: true,
+    },
+    mandal: {
+      type: String,
+      default: 'Musheerabad',
+      trim: true,
+    },
+    village: {
+      type: String,
+      default: 'Musheerabad',
+      trim: true,
+    },
+    constituency: {
+      type: String,
+      default: '057-Musheerabad',
+      trim: true,
+    },
+    address: {
+      type: String,
+      trim: true,
+      default: '',
+    },
+    whatsappNumber: {
+      type: String,
+      trim: true,
     },
     password: {
       type: String,
-      required: [true, 'Password is required'],
-      minlength: [8, 'Password must be at least 8 characters long'],
       select: false, // Don't return password by default
     },
     role: {
@@ -54,6 +96,19 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    isKycVerified: {
+      type: Boolean,
+      default: false,
+    },
+    kycStatus: {
+      type: String,
+      enum: ['pending', 'verified', 'rejected'],
+      default: 'pending',
+    },
+    isDemoAccount: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,
@@ -62,10 +117,10 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-// Encrypt password using bcrypt before saving
-userSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) {
-    next();
+// Encrypt password using bcrypt before saving if modified
+userSchema.pre('save', async function () {
+  if (!this.isModified('password') || !this.password) {
+    return;
   }
 
   const salt = await bcrypt.genSalt(10);
@@ -74,6 +129,7 @@ userSchema.pre('save', async function (next) {
 
 // Method to check if entered password matches the hashed password in DB
 userSchema.methods.matchPassword = async function (enteredPassword) {
+  if (!this.password) return false;
   return await bcrypt.compare(enteredPassword, this.password);
 };
 

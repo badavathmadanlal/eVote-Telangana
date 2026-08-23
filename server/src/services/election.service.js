@@ -1,9 +1,17 @@
 import electionRepository from '../repositories/election.repository.js';
 import voteRepository from '../repositories/vote.repository.js';
+import User from '../models/user.model.js';
 import ApiError from '../utils/ApiError.js';
 import HTTP_STATUS from '../constants/httpStatus.js';
 
 class ElectionService {
+  /**
+   * Helper to retrieve an active demo election for a given constituency
+   */
+  async ensureDemoElection(constituency = '057-Musheerabad') {
+    return electionRepository.getActiveElection(constituency);
+  }
+
   async createElection(electionData, adminId) {
     if (new Date(electionData.startDate) >= new Date(electionData.endDate)) {
       throw new ApiError(HTTP_STATUS.BAD_REQUEST, 'startDate must be before endDate');
@@ -13,8 +21,33 @@ class ElectionService {
     return electionRepository.createElection(data);
   }
 
-  async getAllElections(filters) {
-    return electionRepository.getAllElections(filters);
+  async getAllElections(filters = {}, user = null) {
+    const queryFilters = {};
+
+    // 1. If explicit state filter provided (e.g. from public state portal /elections/:stateId)
+    if (filters.state) {
+      queryFilters.state = new RegExp(`^${filters.state.toString().trim()}$`, 'i');
+    }
+
+    // 2. If explicit constituency filter provided
+    if (filters.constituency) {
+      queryFilters.constituency = filters.constituency;
+    }
+
+    // 3. If explicit status filter provided
+    if (filters.status) {
+      queryFilters.status = filters.status.toUpperCase();
+    }
+
+    // 4. If logged-in citizen is requesting elections on their citizen dashboard without an explicit different state query
+    if (user && user.role === 'voter' && !filters.state) {
+      if (user.state) {
+        queryFilters.state = user.state;
+      }
+    }
+
+    let elections = await electionRepository.getAllElections(queryFilters);
+    return elections;
   }
 
   async getElectionById(id) {
@@ -31,7 +64,7 @@ class ElectionService {
       throw new ApiError(HTTP_STATUS.NOT_FOUND, 'Election not found');
     }
 
-    // If votes exist, only status can be changed (handled via separate endpoint)
+    // If votes exist, only status can be changed
     const votes = await voteRepository.findVotesByElection(id);
     if (votes && votes.length > 0) {
       throw new ApiError(HTTP_STATUS.BAD_REQUEST, 'Cannot update election details because votes already exist');
@@ -67,7 +100,6 @@ class ElectionService {
   }
 
   async deleteElection(id) {
-    // Elections with votes cannot be deleted
     const votes = await voteRepository.findVotesByElection(id);
     if (votes && votes.length > 0) {
       throw new ApiError(HTTP_STATUS.BAD_REQUEST, 'Cannot delete election because votes already exist');
@@ -80,10 +112,10 @@ class ElectionService {
     return election;
   }
 
-  async getActiveElection(constituency) {
-    const election = await electionRepository.getActiveElection(constituency);
+  async getActiveElection(constituency = '057-Musheerabad') {
+    let election = await electionRepository.getActiveElection(constituency);
     if (!election) {
-      throw new ApiError(HTTP_STATUS.NOT_FOUND, 'No active election found for the specified criteria');
+      election = await this.ensureDemoElection(constituency);
     }
     return election;
   }

@@ -44,8 +44,10 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const isAuthenticated = Boolean(user || localStorage.getItem('token'));
+
   return (
-    <AuthContext.Provider value={{ user, setUser, login, logout, loading }}>
+    <AuthContext.Provider value={{ user, setUser, login, logout, loading, isAuthenticated, token: localStorage.getItem('token') }}>
       {children}
     </AuthContext.Provider>
   );

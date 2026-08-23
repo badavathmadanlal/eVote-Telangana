@@ -1,249 +1,338 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+﻿import React from 'react';
 import { Link } from 'react-router-dom';
-import { MdHowToVote, MdVerifiedUser, MdSecurity, MdAnalytics, MdOutlinePeopleOutline, MdCheckCircle } from 'react-icons/md';
-import { FiArrowRight, FiCheckCircle, FiShield, FiLock, FiFileText, FiBell, FiChevronRight } from 'react-icons/fi';
-import Button from '../../components/ui/Button';
+import { motion } from 'framer-motion';
+import { 
+  FiArrowRight, 
+  FiCheckCircle, 
+  FiShield, 
+  FiLock, 
+  FiFileText, 
+  FiUserCheck
+} from 'react-icons/fi';
+import { MdHowToVote, MdAccountBalance, MdOutlineFingerprint } from 'react-icons/md';
+import { useLanguage } from '../../hooks/useLanguage';
+import indianFlagBg from '../../assets/indian_flag_bg.jpg';
+
+const STEPS = [
+  {
+    number: '01',
+    title: 'Citizen Registration',
+    desc: 'Register with your verified EPIC voter card credentials and mobile number.',
+    icon: <FiUserCheck className="text-2xl text-blue-400" />
+  },
+  {
+    number: '02',
+    title: 'Identity (KYC) Verification',
+    desc: 'Instant demographic verification against the State Electoral Roll database.',
+    icon: <MdOutlineFingerprint className="text-2xl text-amber-400" />
+  },
+  {
+    number: '03',
+    title: 'Cast Encrypted Ballot',
+    desc: 'Vote in your registered constituency using 256-bit homomorphic encryption.',
+    icon: <MdHowToVote className="text-2xl text-emerald-400" />
+  },
+  {
+    number: '04',
+    title: 'Verify & Audit Results',
+    desc: 'Obtain an immutable cryptographic voting receipt with real-time tally auditability.',
+    icon: <FiShield className="text-2xl text-purple-400" />
+  }
+];
+
+const PILLARS = [
+  {
+    title: 'Constitutional Secret Ballot',
+    desc: 'Your identity is mathematically decoupled from your cast vote before entering the state ballot vault.',
+    icon: <FiLock className="text-2xl text-amber-400" />
+  },
+  {
+    title: 'Immutable Audit Trail',
+    desc: 'Every ballot cast produces a tamper-evident cryptographic hash for decentralized verification.',
+    icon: <FiFileText className="text-2xl text-emerald-400" />
+  },
+  {
+    title: 'Certified Accessibility',
+    desc: 'Enabling remote franchise participation for elderly, disabled, and remote electors across the nation.',
+    icon: <FiCheckCircle className="text-2xl text-blue-400" />
+  }
+];
 
 const HomePage = () => {
+  const { t } = useLanguage();
+
   return (
-    <div className="space-y-0 bg-slate-50 min-h-screen pb-16">
+    <div className="space-y-0 bg-[#050b1a] text-white min-h-screen w-full overflow-x-hidden">
       
-      {/* 1. Government Portal Hero Section */}
-      <section className="relative bg-[#0f172a] text-white overflow-hidden border-b-[8px] border-amber-500">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/40 to-transparent"></div>
-        <div className="absolute right-0 bottom-0 opacity-5 pointer-events-none transform translate-x-24 translate-y-24">
-          <MdHowToVote className="text-[500px] text-white" />
+      {/* 1. Full-Screen Cinematic Indian Flag Background Hero Section */}
+      <section className="relative bg-[#050b1a] text-white overflow-hidden py-12 sm:py-16 lg:py-24 border-b-2 border-amber-500/40 min-h-[580px] sm:min-h-[640px] flex items-center">
+        
+        {/* Full-Bleed Photograph Background Layer */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+          
+          {/* Exact Indian Flag Photograph Layer (High Visibility) */}
+          <div 
+            className="absolute inset-0 bg-cover bg-center cinematic-flag-bg"
+            style={{
+              backgroundImage: `url(${indianFlagBg})`,
+              backgroundPosition: 'center 28%',
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'cover',
+            }}
+          />
+
+          {/* Balanced Dark Navy Cinematic Overlay (Allows Saffron/White/Green & Chakra to Shine Through) */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#050b1a]/70 via-[#071126]/45 to-[#050b1a]/75" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_left,rgba(5,11,26,0.25)_0%,rgba(5,11,26,0.75)_100%)]" />
+
+          {/* Subtle Ambient Tiranga Flares */}
+          <div className="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-[#FF9933]/15 blur-[120px]" />
+          <div className="absolute -bottom-32 -right-32 w-96 h-96 rounded-full bg-[#138808]/15 blur-[120px]" />
         </div>
 
-        <div className="max-w-7xl mx-auto px-6 py-20 lg:py-28 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 items-center w-full">
           
-          <div className="space-y-8">
-            <div className="inline-flex items-center gap-2 bg-amber-500/20 border border-amber-500/40 text-amber-400 px-3 py-1 rounded text-xs font-bold uppercase tracking-widest">
-              <FiShield className="text-sm" /> State Election Commission
+          {/* Left Column: Hero Text & CTAs */}
+          <div className="lg:col-span-7 space-y-5 sm:space-y-6 text-center lg:text-left">
+            
+            {/* Top Indicator Badge */}
+            <div className="inline-flex items-center gap-2 bg-slate-900/90 border border-slate-700/80 text-slate-300 px-3.5 py-1.5 rounded-full text-xs font-semibold shadow-xs backdrop-blur-xs flex-wrap justify-center lg:justify-start">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span>State Election Commission Portal</span>
+              <span className="text-slate-600">|</span>
+              <span className="text-amber-400 font-mono">National eVote System</span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight font-serif text-white">
-              The Future of <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-300 to-yellow-200">
-                Democracy is Digital
-              </span>
+            {/* Main Headline (Responsive Scale) */}
+            <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black font-serif tracking-tight leading-[1.15] text-white drop-shadow-lg break-words">
+              Empowering Democracy Through{' '}
+              <br className="hidden sm:inline" />
+              <span className="text-amber-500">Secure </span>
+              <span className="text-white">Remote </span>
+              <span className="text-emerald-400">Voting</span>
             </h1>
 
-            <p className="text-slate-300 text-lg leading-relaxed max-w-xl">
-              Telangana's highly secure, remote electronic voting system. Exercise your democratic right from anywhere, with absolute privacy and tamper-proof ledger security.
+            <p className="text-xs sm:text-sm md:text-base text-slate-300 leading-relaxed max-w-2xl mx-auto lg:mx-0 font-normal">
+              A next-generation electronic voting system engineered with cryptographic vote privacy, demographic identity validation, and immutable electoral auditability across 6 Indian states.
             </p>
 
-            <div className="flex flex-wrap gap-4 pt-4">
-              <Link to="/register">
-                <Button size="lg" className="bg-amber-500 text-slate-900 font-bold hover:bg-amber-400 border-none shadow-lg px-8 py-3 rounded-none flex items-center gap-2">
-                  Register to Vote <FiArrowRight className="text-lg" />
-                </Button>
+            {/* CTAs */}
+            <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start pt-2 w-full sm:w-auto">
+              <Link
+                to="/register"
+                className="w-full sm:w-auto bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 font-black py-3.5 px-8 rounded-xl text-xs sm:text-sm shadow-xl hover:shadow-orange-500/20 flex items-center justify-center gap-2 cursor-pointer transition-all"
+              >
+                <span>Register to Vote</span>
+                <FiArrowRight />
               </Link>
-              <Link to="/login">
-                <Button size="lg" variant="outline" className="border-slate-500 text-slate-200 hover:bg-slate-800 hover:text-white rounded-none px-8 py-3">
+              
+              <Link
+                to="/elections"
+                className="w-full sm:w-auto bg-slate-900/90 hover:bg-slate-800 text-white font-bold py-3.5 px-6 rounded-xl text-xs sm:text-sm border border-slate-700/90 flex items-center justify-center gap-2.5 cursor-pointer transition-all shadow-md backdrop-blur-xs"
+              >
+                <div className="w-5 h-5 rounded-md bg-blue-600/30 border border-blue-400/40 flex items-center justify-center text-blue-400 text-xs">
+                  <MdHowToVote />
+                </div>
+                <span>Explore Elections</span>
+              </Link>
+            </div>
+
+            {/* Micro Feature Indicators */}
+            <div className="pt-4 border-t border-slate-800/80 grid grid-cols-2 sm:flex sm:flex-wrap items-center justify-center lg:justify-start gap-3 sm:gap-5 text-[11px] sm:text-xs text-slate-400 font-medium text-left">
+              <span className="flex items-center gap-1.5">
+                <FiCheckCircle className="text-emerald-400 shrink-0" /> Aadhaar KYC Verified
+              </span>
+              <span className="flex items-center gap-1.5">
+                <FiLock className="text-blue-400 shrink-0" /> End-to-End Encrypted
+              </span>
+              <span className="flex items-center gap-1.5">
+                <FiFileText className="text-amber-400 shrink-0" /> Cryptographic Receipts
+              </span>
+              <span className="flex items-center gap-1.5">
+                <FiShield className="text-purple-400 shrink-0" /> Multi-State Secure
+              </span>
+            </div>
+
+          </div>
+
+          {/* Right Column: Academic Demo Banner & Live ECI Portal Card (Dark Glass) */}
+          <div className="lg:col-span-5 flex flex-col items-center lg:items-end justify-center space-y-4 w-full">
+            
+            {/* 1. Academic Demo Notice Banner (Dark Glass) */}
+            <div className="w-full max-w-md bg-[#0a1428]/85 border border-amber-500/30 rounded-2xl p-4 sm:p-4.5 shadow-2xl backdrop-blur-md text-left space-y-2">
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-[10px] font-mono uppercase tracking-widest font-black text-amber-400 bg-amber-500/20 px-2 py-0.5 rounded border border-amber-500/30">
+                  FINAL YEAR PROJECT DEMO
+                </span>
+              </div>
+              <p className="text-xs text-amber-200/90 leading-relaxed">
+                Academic demonstration spanning 6 states with fictional demographic rolls and mock candidate ballots for B.Tech project presentation.
+              </p>
+            </div>
+
+            {/* 2. Official State Portals Card (Dark Glass) */}
+            <div className="w-full max-w-md bg-[#0a1428]/90 backdrop-blur-md rounded-2xl p-5 sm:p-6 border border-slate-700/80 shadow-2xl space-y-4">
+              
+              <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+                <div className="flex items-center gap-2">
+                  <MdAccountBalance className="text-amber-400 text-lg sm:text-xl" />
+                  <span className="text-xs font-bold text-white uppercase tracking-wider">OFFICIAL STATE PORTALS</span>
+                </div>
+                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 uppercase font-mono">
+                  ● 6 STATES ACTIVE
+                </span>
+              </div>
+
+              {/* Metrics Table */}
+              <div className="space-y-2 text-xs">
+                <div className="flex items-center justify-between text-slate-300">
+                  <span>Total Elections:</span>
+                  <span className="font-mono font-bold text-amber-400">30 Active / Upcoming</span>
+                </div>
+                <div className="flex items-center justify-between text-slate-300">
+                  <span>Supported States:</span>
+                  <span className="font-mono font-bold text-slate-200">TS, AP, DL, TN, MH, AS</span>
+                </div>
+                <div className="flex items-center justify-between text-slate-300">
+                  <span>Ballot Privacy:</span>
+                  <span className="font-mono font-bold text-emerald-400">256-bit Encrypted Vault</span>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="grid grid-cols-2 gap-2.5 pt-2">
+                <Link
+                  to="/login"
+                  className="w-full py-2.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white text-xs font-bold text-center border border-slate-700 transition-all shadow-sm flex items-center justify-center cursor-pointer"
+                >
                   Citizen Login
-                </Button>
-              </Link>
+                </Link>
+                <Link
+                  to="/results"
+                  className="w-full py-2.5 px-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold text-center transition-all shadow-md flex items-center justify-center cursor-pointer"
+                >
+                  Live Results
+                </Link>
+              </div>
+
+              {/* Project Credit Note */}
+              <div className="pt-2 border-t border-slate-800/80 text-center">
+                <p className="text-[10px] text-slate-500 font-mono">
+                  Designed & Developed by <span className="text-slate-400 font-medium">Badavath Madanlal</span>
+                </p>
+              </div>
+
             </div>
 
-            <div className="flex flex-wrap gap-6 pt-8 border-t border-slate-800/60 text-xs font-semibold text-slate-400">
-              <div className="flex items-center gap-2">
-                <FiCheckCircle className="text-emerald-400 text-lg" />
-                <span>AADHAAR VERIFIED</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <FiLock className="text-blue-400 text-lg" />
-                <span>E2E ENCRYPTED</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <FiFileText className="text-amber-400 text-lg" />
-                <span>AUDITABLE TRAIL</span>
-              </div>
-            </div>
           </div>
 
-          <div className="hidden lg:block">
-            {/* Complex Illustration / Dashboard Mockup */}
-            <div className="relative">
-              <div className="absolute inset-0 bg-blue-500/20 blur-[100px] rounded-full"></div>
-              <div className="bg-slate-800/80 backdrop-blur border border-slate-700/50 p-2 rounded-xl shadow-2xl relative z-10 transform rotate-[-2deg] hover:rotate-0 transition-transform duration-500">
-                <div className="bg-slate-900 rounded-lg p-6 border border-slate-700">
-                  <div className="flex justify-between items-center mb-6">
-                    <div className="flex items-center gap-3">
-                      <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                      <div className="w-3 h-3 bg-amber-500 rounded-full"></div>
-                      <div className="w-3 h-3 bg-emerald-500 rounded-full"></div>
-                    </div>
-                    <div className="text-xs text-slate-400 font-mono">SEC_PORTAL_V2</div>
-                  </div>
-                  <div className="space-y-4">
-                    <div className="h-8 bg-slate-800 rounded w-1/3"></div>
-                    <div className="h-4 bg-slate-800 rounded w-1/2 mb-6"></div>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="h-24 bg-gradient-to-br from-blue-900/50 to-slate-800 rounded-lg border border-blue-500/30"></div>
-                      <div className="h-24 bg-gradient-to-br from-emerald-900/50 to-slate-800 rounded-lg border border-emerald-500/30"></div>
-                    </div>
-                    <div className="h-32 bg-slate-800/50 rounded-lg border border-slate-700 mt-4 flex items-center justify-center">
-                      <MdHowToVote className="text-6xl text-slate-700" />
-                    </div>
-                  </div>
-                </div>
-                {/* Floating Elements */}
-                <div className="absolute -right-6 -bottom-6 bg-emerald-500 text-slate-900 p-4 rounded-lg shadow-xl font-bold flex items-center gap-3 transform rotate-[5deg]">
-                  <MdCheckCircle className="text-2xl" />
-                  <div>
-                    <div className="text-xs opacity-80 uppercase">Status</div>
-                    <div className="text-sm">Ballot Cast</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+        </div>
 
+      </section>
+
+      {/* 2. Four-Step Electoral Process Section (Dark Navy Theme) */}
+      <section className="py-14 sm:py-20 max-w-7xl mx-auto px-4 sm:px-6 bg-[#050b1a]">
+        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14 space-y-2">
+          <span className="text-xs font-bold font-mono tracking-widest text-blue-400 uppercase bg-blue-500/10 px-3 py-1 rounded-full border border-blue-400/20">
+            HOW IT WORKS
+          </span>
+          <h2 className="text-2xl sm:text-4xl font-black font-serif text-white">
+            {t('home.howItWorksTitle', 'Four Steps to Digital Franchise')}
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-400">
+            A frictionless, government-grade workflow from voter identity validation to cryptographic receipt generation.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {STEPS.map((step, idx) => (
+            <motion.div
+              key={step.number}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.1, duration: 0.3 }}
+              className="bg-[#0a1428]/80 rounded-2xl p-6 border border-slate-800 shadow-lg hover:border-slate-700 transition-all space-y-4 relative group"
+            >
+              <div className="flex items-center justify-between">
+                <div className="p-3 bg-slate-900 rounded-xl group-hover:scale-110 transition-transform border border-slate-800">
+                  {step.icon}
+                </div>
+                <span className="text-3xl font-black font-mono text-slate-700 group-hover:text-blue-400 transition-colors">
+                  {step.number}
+                </span>
+              </div>
+              <h3 className="font-bold text-base text-white font-serif">
+                {step.title}
+              </h3>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                {step.desc}
+              </p>
+            </motion.div>
+          ))}
         </div>
       </section>
 
-      {/* 2. Key Statistics Bar */}
-      <section className="bg-white border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-6 py-8 grid grid-cols-2 md:grid-cols-4 gap-8 divide-x divide-slate-100 text-center">
-          <div>
-            <p className="text-3xl md:text-4xl font-black text-slate-900 font-serif">119</p>
-            <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest mt-1">Constituencies</p>
+      {/* 3. Constitutional Pillars Section (Dark Theme) */}
+      <section className="bg-[#071126] text-white py-14 sm:py-20 border-y border-slate-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14 space-y-2">
+            <span className="text-xs font-bold font-mono tracking-widest text-amber-400 uppercase bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20">
+              TRUST & INTEGRITY
+            </span>
+            <h2 className="text-2xl sm:text-4xl font-black font-serif">
+              Constitutional Pillars of eVote
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-400">
+              Upholding the Representation of the People Act with cutting-edge zero-trust cryptographic guarantees.
+            </p>
           </div>
-          <div>
-            <p className="text-3xl md:text-4xl font-black text-slate-900 font-serif">3.2<span className="text-blue-600">cr</span></p>
-            <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest mt-1">Registered Voters</p>
-          </div>
-          <div>
-            <p className="text-3xl md:text-4xl font-black text-slate-900 font-serif">100<span className="text-emerald-500">%</span></p>
-            <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest mt-1">Secure & Encrypted</p>
-          </div>
-          <div>
-            <p className="text-3xl md:text-4xl font-black text-slate-900 font-serif">24/7</p>
-            <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest mt-1">Remote Access</p>
-          </div>
-        </div>
-      </section>
 
-      {/* 3. Quick Services & Announcements Split */}
-      <section className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 lg:grid-cols-3 gap-12">
-        
-        {/* Quick Services (2/3) */}
-        <div className="lg:col-span-2 space-y-8">
-          <div className="flex items-end justify-between border-b-2 border-slate-200 pb-2">
-            <h2 className="text-2xl font-black text-slate-900 font-serif">Citizen Services</h2>
-            <Link to="/elections" className="text-sm font-bold text-blue-700 hover:underline flex items-center gap-1">
-              View All <FiChevronRight />
-            </Link>
-          </div>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <Link to="/register" className="group bg-white p-6 border-2 border-slate-100 hover:border-blue-500 rounded-xl shadow-sm hover:shadow-xl transition-all">
-              <div className="w-12 h-12 bg-blue-50 text-blue-700 rounded flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
-                <MdOutlinePeopleOutline />
-              </div>
-              <h3 className="text-lg font-bold text-slate-900 mb-2">Voter Registration</h3>
-              <p className="text-sm text-slate-600">Enroll yourself on the digital platform using your existing EPIC details.</p>
-            </Link>
-
-            <Link to="/elections" className="group bg-white p-6 border-2 border-slate-100 hover:border-emerald-500 rounded-xl shadow-sm hover:shadow-xl transition-all">
-              <div className="w-12 h-12 bg-emerald-50 text-emerald-700 rounded flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
-                <MdHowToVote />
-              </div>
-              <h3 className="text-lg font-bold text-slate-900 mb-2">Active Elections</h3>
-              <p className="text-sm text-slate-600">View upcoming and ongoing elections in your registered constituency.</p>
-            </Link>
-
-            <Link to="/results" className="group bg-white p-6 border-2 border-slate-100 hover:border-amber-500 rounded-xl shadow-sm hover:shadow-xl transition-all">
-              <div className="w-12 h-12 bg-amber-50 text-amber-700 rounded flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
-                <MdAnalytics />
-              </div>
-              <h3 className="text-lg font-bold text-slate-900 mb-2">Election Results</h3>
-              <p className="text-sm text-slate-600">Access transparent and verified results immediately after counting concludes.</p>
-            </Link>
-
-            <Link to="/login" className="group bg-white p-6 border-2 border-slate-100 hover:border-purple-500 rounded-xl shadow-sm hover:shadow-xl transition-all">
-              <div className="w-12 h-12 bg-purple-50 text-purple-700 rounded flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
-                <MdVerifiedUser />
-              </div>
-              <h3 className="text-lg font-bold text-slate-900 mb-2">Check Status</h3>
-              <p className="text-sm text-slate-600">Login to check your verification status and update your profile details.</p>
-            </Link>
-          </div>
-        </div>
-
-        {/* Announcements (1/3) */}
-        <div className="bg-white border-2 border-slate-200 rounded-xl overflow-hidden flex flex-col h-full shadow-sm">
-          <div className="bg-slate-900 text-white p-4 flex items-center gap-2">
-            <FiBell className="text-amber-400 text-lg animate-pulse" />
-            <h3 className="font-bold text-lg">Official Notice Board</h3>
-          </div>
-          <div className="p-0 flex-1 divide-y divide-slate-100 overflow-y-auto max-h-[400px]">
-            {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="p-4 hover:bg-slate-50 transition-colors">
-                <div className="flex gap-4">
-                  <div className="shrink-0 text-center bg-slate-100 rounded p-2 border border-slate-200 min-w-[3.5rem]">
-                    <p className="text-xs font-bold text-red-600 uppercase">Oct</p>
-                    <p className="text-lg font-black text-slate-800 leading-none mt-1">2{i}</p>
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-slate-900 text-sm hover:text-blue-700 cursor-pointer">
-                      Schedule for General Elections to the Legislative Assembly
-                    </h4>
-                    <p className="text-xs text-slate-500 mt-1 line-clamp-2">
-                      The Election Commission has announced the schedule for the upcoming assembly elections across all 119 constituencies.
-                    </p>
-                  </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+            {PILLARS.map((pillar, idx) => (
+              <div 
+                key={idx}
+                className="bg-[#0a1428]/90 rounded-2xl p-6 sm:p-8 border border-slate-800 hover:border-slate-700 transition-all space-y-4"
+              >
+                <div className="p-3.5 bg-slate-900 inline-block rounded-xl border border-slate-800">
+                  {pillar.icon}
                 </div>
+                <h3 className="font-bold text-base sm:text-lg text-white font-serif">
+                  {pillar.title}
+                </h3>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  {pillar.desc}
+                </p>
               </div>
             ))}
           </div>
-          <div className="p-3 bg-slate-50 border-t border-slate-100 text-center">
-            <Link to="/announcements" className="text-xs font-bold text-blue-700 uppercase tracking-wider hover:underline">
-              View All Notices
-            </Link>
-          </div>
         </div>
       </section>
 
-      {/* 4. Help & Support */}
-      <section className="bg-slate-900 text-white py-16">
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <div className="space-y-6">
-            <h2 className="text-3xl font-black font-serif">Need Assistance?</h2>
-            <p className="text-slate-300">
-              Our support team is available to help you with registration, verification, or any technical issues faced during the voting process.
+      {/* 4. Supported State Portals CTA Strip */}
+      <section className="py-12 sm:py-16 max-w-7xl mx-auto px-4 sm:px-6 bg-[#050b1a]">
+        <div className="bg-gradient-to-r from-blue-950 via-indigo-950 to-slate-900 rounded-3xl p-6 sm:p-10 lg:p-12 text-white text-center sm:text-left flex flex-col lg:flex-row items-center justify-between gap-6 sm:gap-8 border border-blue-900/60 shadow-2xl">
+          <div className="space-y-2 max-w-xl">
+            <h3 className="text-xl sm:text-2xl lg:text-3xl font-black font-serif">
+              Ready to Explore Your State Portal?
+            </h3>
+            <p className="text-xs sm:text-sm text-blue-200 leading-relaxed">
+              Select from Telangana, Andhra Pradesh, Delhi, Tamil Nadu, Maharashtra, or Assam to view state-specific constituencies, active ballots, and official announcements.
             </p>
-            <div className="space-y-4 pt-4">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-slate-800 rounded flex items-center justify-center text-xl text-amber-400">
-                  <FiFileText />
-                </div>
-                <div>
-                  <h4 className="font-bold">Frequently Asked Questions</h4>
-                  <Link to="/faq" className="text-sm text-blue-400 hover:underline">Read the FAQ</Link>
-                </div>
-              </div>
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-slate-800 rounded flex items-center justify-center text-xl text-emerald-400">
-                  <FiLock />
-                </div>
-                <div>
-                  <h4 className="font-bold">Security Guidelines</h4>
-                  <Link to="/about" className="text-sm text-blue-400 hover:underline">Read about our encryption</Link>
-                </div>
-              </div>
-            </div>
           </div>
-          <div className="bg-blue-900/40 border border-blue-500/30 p-8 rounded-2xl text-center">
-            <h3 className="text-2xl font-black mb-2">Toll Free Helpline</h3>
-            <p className="text-6xl font-black text-amber-400 font-serif tracking-widest mb-4">1950</p>
-            <p className="text-sm text-slate-300">Available from 8:00 AM to 8:00 PM</p>
-            <Link to="/contact">
-              <Button className="mt-6 bg-white text-blue-900 hover:bg-slate-100 font-bold px-8">
-                Contact Directory
-              </Button>
+
+          <div className="flex flex-wrap items-center justify-center gap-3 w-full sm:w-auto">
+            <Link
+              to="/elections"
+              className="w-full sm:w-auto text-center bg-amber-400 hover:bg-amber-300 text-slate-950 font-black py-3 px-6 sm:py-3.5 sm:px-7 rounded-xl text-xs transition-all shadow-md cursor-pointer"
+            >
+              Browse Active Elections
+            </Link>
+            <Link
+              to="/about"
+              className="w-full sm:w-auto text-center bg-white/10 hover:bg-white/20 text-white font-bold py-3 px-6 sm:py-3.5 sm:px-7 rounded-xl text-xs border border-white/20 transition-all cursor-pointer"
+            >
+              About the Project
             </Link>
           </div>
         </div>

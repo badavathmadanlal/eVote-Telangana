@@ -1,4 +1,4 @@
-﻿export const en = {
+export const en = {
   nav: {
     home: "Home",
     about: "About Us",
@@ -213,6 +213,21 @@
     totalVotesCast: "Total Votes Cast",
     activeElectionsCount: "Active Elections",
     turnoutRate: "Voter Turnout Rate"
+  },
+  sidebar: {
+    dashboard: "Dashboard",
+    voters: "Voters",
+    elections: "Elections",
+    candidates: "Candidates",
+    liveVoting: "Live Voting",
+    results: "Results",
+    announcements: "Announcements",
+    auditLogs: "Audit Logs",
+    votingHistory: "Voting History",
+    verification: "Verification",
+    profile: "Profile",
+    publicSite: "Public Site",
+    signOut: "Sign Out"
   }
 };
 export default en;

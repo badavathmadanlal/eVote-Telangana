@@ -7,13 +7,20 @@ class VoteController {
     const { candidateId, electionId } = req.body;
     
     const vote = await voteService.castVote(userId, { candidateId, electionId });
-    return ApiResponse.created(res, 'Vote cast successfully', { vote });
+    return ApiResponse.created(res, vote.message || 'Vote cast successfully', { vote, ...vote });
   }
 
   async getMyVotes(req, res) {
     const userId = req.user._id;
     const votes = await voteService.getMyVotes(userId);
     return ApiResponse.success(res, 'Votes retrieved successfully', { votes });
+  }
+
+  async hasVoted(req, res) {
+    const userId = req.user._id;
+    const { electionId } = req.params;
+    const status = await voteService.hasUserVoted(userId, electionId);
+    return ApiResponse.success(res, 'Voting status retrieved', status);
   }
 
   async getElectionResults(req, res) {

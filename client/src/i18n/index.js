@@ -1,4 +1,4 @@
-﻿import i18n from 'i18next';
+import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import { translations, LANGUAGES } from './translations.js';
 
@@ -25,6 +25,8 @@ i18n
     resources,
     lng: initialLanguage,
     fallbackLng: 'en',
+    returnNull: false,
+    returnEmptyString: false,
     debug: false,
     interpolation: {
       escapeValue: false, // React already escapes values

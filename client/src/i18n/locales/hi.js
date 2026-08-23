@@ -1,4 +1,4 @@
-﻿export const hi = {
+export const hi = {
   nav: {
     home: "होम",
     about: "हमारे बारे में",
@@ -213,6 +213,21 @@
     totalVotesCast: "कुल डाले गए वोट",
     activeElectionsCount: "सक्रिय चुनाव",
     turnoutRate: "मतदान प्रतिशत"
+  },
+  sidebar: {
+    dashboard: "डैशबोर्ड",
+    voters: "मतदाता",
+    elections: "चुनाव",
+    candidates: "उम्मीदवार",
+    liveVoting: "लाइव वोटिंग",
+    results: "परिणाम",
+    announcements: "घोषणाएं",
+    auditLogs: "ऑडिट लॉग",
+    votingHistory: "मतदान इतिहास",
+    verification: "सत्यापन",
+    profile: "प्रोफ़ाइल",
+    publicSite: "सार्वजनिक पोर्टल",
+    signOut: "साइन आउट"
   }
 };
 export default hi;

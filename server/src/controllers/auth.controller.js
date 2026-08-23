@@ -1,22 +1,26 @@
-import authService from '../services/auth.service.js';
+﻿import authService from '../services/auth.service.js';
 import ApiResponse from '../utils/ApiResponse.js';
 import jwtUtils from '../utils/jwt.js';
 
 class AuthController {
   async register(req, res) {
-    const { firstName, lastName, email, mobileNumber, password } = req.body;
+    const { firstName, lastName, email, mobileNumber, aadhaar, whatsappNumber, password } = req.body;
 
-    const { user, token } = await authService.register({
+    const result = await authService.register({
       firstName,
       lastName,
       email,
       mobileNumber,
+      aadhaar,
+      whatsappNumber,
       password,
     });
 
-    jwtUtils.setTokenCookie(res, token);
+    if (result.token) {
+      jwtUtils.setTokenCookie(res, result.token);
+    }
 
-    return ApiResponse.created(res, 'User registered successfully', { user, token });
+    return ApiResponse.created(res, result.message || 'User registered successfully', result);
   }
 
   async login(req, res) {
@@ -32,7 +36,7 @@ class AuthController {
   async sendLoginOtp(req, res) {
     const { mobileNumber } = req.body;
     const response = await authService.sendLoginOtp(mobileNumber);
-    return ApiResponse.success(res, response.message);
+    return ApiResponse.success(res, response.message, response);
   }
 
   async verifyLoginOtp(req, res) {
@@ -62,9 +66,8 @@ class AuthController {
     return ApiResponse.success(res, response.message);
   }
 
-  async getAllUsers(req, res) {
-    const users = await authService.getAllUsers(req.query);
-    return ApiResponse.success(res, 'Users retrieved successfully', { users });
+  async getMe(req, res) {
+    return ApiResponse.success(res, 'User profile fetched successfully', { user: req.user });
   }
 }
 

@@ -19,6 +19,11 @@ router.get(
 );
 
 router.get(
+  '/',
+  asyncHandler(announcementController.getAllAnnouncements)
+);
+
+router.get(
   '/:id',
   asyncHandler(announcementController.getAnnouncementById)
 );
@@ -32,11 +37,6 @@ router.post(
   announcementValidator,
   validate,
   asyncHandler(announcementController.createAnnouncement)
-);
-
-router.get(
-  '/',
-  asyncHandler(announcementController.getAllAnnouncements)
 );
 
 router.put(

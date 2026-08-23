@@ -17,7 +17,7 @@ class ElectionController {
   }
 
   async getAllElections(req, res) {
-    const elections = await electionService.getAllElections(req.query);
+    const elections = await electionService.getAllElections(req.query, req.user);
     return ApiResponse.success(res, 'Elections retrieved successfully', { elections });
   }
 
@@ -27,7 +27,7 @@ class ElectionController {
   }
 
   async getActiveElection(req, res) {
-    const { constituency } = req.query;
+    const constituency = req.query.constituency || req.user?.constituency;
     const election = await electionService.getActiveElection(constituency);
     return ApiResponse.success(res, 'Active election retrieved successfully', { election });
   }

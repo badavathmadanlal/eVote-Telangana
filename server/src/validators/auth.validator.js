@@ -1,4 +1,4 @@
-import { check } from 'express-validator';
+﻿import { check } from 'express-validator';
 
 export const registerValidator = [
   check('firstName')
@@ -12,47 +12,44 @@ export const registerValidator = [
     .trim(),
 
   check('email')
-    .notEmpty().withMessage('Email is required')
+    .optional({ checkFalsy: true })
     .isEmail().withMessage('Must be a valid email address')
     .normalizeEmail(),
 
   check('mobileNumber')
-    .notEmpty().withMessage('Mobile number is required')
-    .matches(/^[6-9]\d{9}$/).withMessage('Must be a valid 10-digit Indian mobile number'),
+    .optional({ checkFalsy: true })
+    .matches(/^\d{10}$/).withMessage('Must be a valid 10-digit mobile number'),
+
+  check('aadhaar')
+    .optional({ checkFalsy: true })
+    .matches(/^\d{12}$/).withMessage('Aadhaar must be a 12-digit number'),
+
+  check('whatsappNumber')
+    .optional({ checkFalsy: true })
+    .matches(/^\d{10}$/).withMessage('WhatsApp number must be a valid 10-digit mobile number'),
 
   check('password')
-    .notEmpty().withMessage('Password is required')
-    .isLength({ min: 8 }).withMessage('Password must be at least 8 characters long')
-    .matches(/\d/).withMessage('Password must contain at least one number')
-    .matches(/[a-zA-Z]/).withMessage('Password must contain at least one letter'),
-    
-  check('confirmPassword')
-    .notEmpty().withMessage('Confirm Password is required')
-    .custom((value, { req }) => {
-      if (value !== req.body.password) {
-        throw new Error('Passwords do not match');
-      }
-      return true;
-    }),
+    .optional({ checkFalsy: true })
+    .isLength({ min: 8 }).withMessage('Password must be at least 8 characters long'),
 ];
 
 export const loginValidator = [
   check('emailOrMobile')
-    .notEmpty().withMessage('Email or Mobile number is required'),
+    .notEmpty().withMessage('Email, Mobile, or Aadhaar number is required'),
   check('password')
     .notEmpty().withMessage('Password is required'),
 ];
 
 export const sendOtpValidator = [
   check('mobileNumber')
-    .notEmpty().withMessage('Mobile number is required')
-    .matches(/^[6-9]\d{9}$/).withMessage('Must be a valid 10-digit Indian mobile number'),
+    .notEmpty().withMessage('Mobile number or Aadhaar is required')
+    .matches(/^(\d{10}|\d{12})$/).withMessage('Must be a valid 10-digit mobile or 12-digit Aadhaar number'),
 ];
 
 export const verifyOtpValidator = [
   check('mobileNumber')
     .notEmpty().withMessage('Mobile number is required')
-    .matches(/^[6-9]\d{9}$/).withMessage('Must be a valid 10-digit Indian mobile number'),
+    .matches(/^(\d{10}|\d{12})$/).withMessage('Must be a valid 10-digit mobile or 12-digit Aadhaar number'),
   check('otp')
     .notEmpty().withMessage('OTP is required')
     .isLength({ min: 6, max: 6 }).withMessage('OTP must be exactly 6 digits'),

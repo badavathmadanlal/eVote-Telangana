@@ -36,8 +36,8 @@ const electionSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ['INACTIVE', 'ACTIVE'],
-      default: 'INACTIVE',
+      enum: ['INACTIVE', 'ACTIVE', 'UPCOMING', 'COMPLETED', 'CLOSED'],
+      default: 'ACTIVE',
     },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,

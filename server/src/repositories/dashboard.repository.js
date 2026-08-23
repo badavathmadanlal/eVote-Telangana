@@ -1,50 +1,78 @@
-import User from '../models/user.model.js';
-import Citizen from '../models/citizen.model.js';
+﻿import User from '../models/user.model.js';
 import Election from '../models/election.model.js';
 import Candidate from '../models/candidate.model.js';
 import Vote from '../models/vote.model.js';
+import { STATES_DATA } from '../constants/statesData.js';
 
 class DashboardRepository {
   async getSummary() {
-    const totalUsers = await User.countDocuments();
-    const verifiedCitizens = await Citizen.countDocuments({ verificationStatus: true });
-    // In this system, all Users who are not verified citizens might be pending verification
-    // Since we don't have a direct 'pending' flag, we can infer it as totalUsers - admin (1 or more) - verifiedCitizens
-    // For a cleaner approach based on Citizen collection:
-    // Actually, any User who hasn't verified is pending. But User collection might just be registered users.
-    const pendingVerification = totalUsers - verifiedCitizens; // rough estimate
+    const totalVoters = await User.countDocuments({ role: 'voter' });
+    const verifiedVoters = await User.countDocuments({ role: 'voter', isKycVerified: true });
+    const eligibleVoters = verifiedVoters;
+    const votesCast = await Vote.countDocuments();
+    const remainingVoters = Math.max(0, eligibleVoters - votesCast);
+    const overallTurnout = eligibleVoters > 0 ? parseFloat(((votesCast / eligibleVoters) * 100).toFixed(1)) : 0;
 
-    const elections = await Election.aggregate([
-      {
-        $facet: {
-          total: [{ $count: 'count' }],
-          active: [{ $match: { status: 'ACTIVE' } }, { $count: 'count' }],
-          inactive: [{ $match: { status: 'INACTIVE' } }, { $count: 'count' }],
-        },
-      },
-    ]);
-
-    const totalElections = elections[0].total[0]?.count || 0;
-    const activeElections = elections[0].active[0]?.count || 0;
-    const inactiveElections = elections[0].inactive[0]?.count || 0;
-
+    const totalElections = await Election.countDocuments();
+    const activeElections = await Election.countDocuments({ status: 'ACTIVE' });
     const totalCandidates = await Candidate.countDocuments();
-    const totalVotes = await Vote.countDocuments();
+
+    // Distinct active constituencies
+    const activeConstituencies = (await Election.distinct('constituency', { status: 'ACTIVE' })).length;
+
+    // State-wise Turnout Breakdown
+    const stateTurnout = [];
+    for (const state of STATES_DATA) {
+      const stateVoters = await User.countDocuments({ role: 'voter', state: state.name, isKycVerified: true });
+      const stateVotes = await Vote.countDocuments({ constituency: { $in: state.constituencies.map(c => c.name) } });
+      const turnoutPct = stateVoters > 0 ? parseFloat(((stateVotes / stateVoters) * 100).toFixed(1)) : 0;
+      stateTurnout.push({
+        stateName: state.name,
+        capital: state.capital,
+        eligibleVoters: stateVoters,
+        votesCast: stateVotes,
+        turnoutPercentage: turnoutPct,
+        activeConstituencies: state.constituencies.length
+      });
+    }
+
+    // Constituency-wise Turnout Breakdown (Top 10)
+    const constituencyTurnout = [];
+    const activeElectionsList = await Election.find({ status: 'ACTIVE' }).limit(10);
+    for (const el of activeElectionsList) {
+      const constVoters = await User.countDocuments({ role: 'voter', constituency: el.constituency, isKycVerified: true });
+      const constVotes = await Vote.countDocuments({ electionId: el._id });
+      const turnoutPct = constVoters > 0 ? parseFloat(((constVotes / constVoters) * 100).toFixed(1)) : 0;
+      constituencyTurnout.push({
+        constituency: el.constituency,
+        state: el.state,
+        electionTitle: el.title,
+        eligibleVoters: constVoters,
+        votesCast: constVotes,
+        turnoutPercentage: turnoutPct
+      });
+    }
 
     return {
-      totalUsers,
-      verifiedCitizens,
-      pendingVerification: pendingVerification > 0 ? pendingVerification : 0,
+      totalUsers: totalVoters,
+      totalRegisteredVoters: totalVoters,
+      verifiedCitizens: verifiedVoters,
+      verifiedVoters,
+      eligibleVoters,
+      votesCast,
+      totalVotes: votesCast,
+      remainingVoters,
+      overallTurnout,
       totalElections,
       activeElections,
-      inactiveElections,
+      activeConstituencies,
       totalCandidates,
-      totalVotes,
+      stateTurnout,
+      constituencyTurnout
     };
   }
 
   async getCharts() {
-    // 1. Candidate Vote Distribution (Top 10)
     const candidateVoteDistribution = await Vote.aggregate([
       { $group: { _id: '$candidateId', count: { $sum: 1 } } },
       { $sort: { count: -1 } },
@@ -54,125 +82,50 @@ class DashboardRepository {
       { $project: { _id: 0, candidateName: '$candidate.fullName', partyName: '$candidate.partyName', votes: '$count' } }
     ]);
 
-    // 2. Election Status Distribution
     const electionStatusDistribution = await Election.aggregate([
       { $group: { _id: '$status', count: { $sum: 1 } } },
       { $project: { _id: 0, status: '$_id', count: 1 } }
     ]);
 
-    // 3. Constituency Vote Distribution
     const constituencyVoteDistribution = await Vote.aggregate([
       { $group: { _id: '$constituency', votes: { $sum: 1 } } },
       { $project: { _id: 0, constituency: '$_id', votes: 1 } },
       { $sort: { votes: -1 } }
     ]);
 
-    // 4. User Registration Growth (Mocked loosely by looking at timestamps if available)
-    // Grouping by Date (YYYY-MM-DD)
-    const userRegistrationGrowth = await User.aggregate([
-      { 
-        $group: { 
-          _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } }, 
-          count: { $sum: 1 } 
-        } 
-      },
-      { $sort: { _id: 1 } },
-      { $limit: 30 }, // last 30 days
-      { $project: { _id: 0, date: '$_id', users: '$count' } }
-    ]);
-
-    // 5. Verification Status
-    const totalUsers = await User.countDocuments();
-    const verifiedCitizens = await Citizen.countDocuments({ verificationStatus: true });
-    const verificationStatus = [
-      { status: 'Verified', count: verifiedCitizens },
-      { status: 'Unverified', count: totalUsers - verifiedCitizens > 0 ? totalUsers - verifiedCitizens : 0 }
-    ];
-
-    // 6. Votes Per Election
-    const votesPerElection = await Vote.aggregate([
-      { $group: { _id: '$electionId', votes: { $sum: 1 } } },
-      { $lookup: { from: 'elections', localField: '_id', foreignField: '_id', as: 'election' } },
-      { $unwind: '$election' },
-      { $project: { _id: 0, electionTitle: '$election.title', votes: 1 } },
-      { $sort: { votes: -1 } }
-    ]);
-
     return {
       candidateVoteDistribution,
       electionStatusDistribution,
-      constituencyVoteDistribution,
-      userRegistrationGrowth,
-      verificationStatus,
-      votesPerElection
+      constituencyVoteDistribution
     };
   }
 
   async getRecent() {
-    const limit = 5;
-    
-    const recentUsers = await User.find().sort({ createdAt: -1 }).limit(limit).select('name email role createdAt');
-    const recentElections = await Election.find().sort({ createdAt: -1 }).limit(limit).select('title status constituency createdAt');
-    const recentCandidates = await Candidate.find().sort({ createdAt: -1 }).limit(limit).select('fullName partyName electionId createdAt').populate('electionId', 'title');
-    const recentVotes = await Vote.find().sort({ votedAt: -1 }).limit(limit).select('constituency votedAt').populate('candidateId', 'fullName partyName').populate('electionId', 'title');
+    const recentElections = await Election.find().sort({ createdAt: -1 }).limit(5);
+    const recentVotes = await Vote.find().populate('electionId', 'title constituency').sort({ createdAt: -1 }).limit(5);
+    const recentUsers = await User.find({ role: 'voter' }).select('firstName lastName epicNumber constituency isKycVerified createdAt').sort({ createdAt: -1 }).limit(5);
 
     return {
-      recentUsers,
       recentElections,
-      recentCandidates,
-      recentVotes
+      recentVotes: recentVotes.map(v => ({
+        _id: v._id,
+        electionTitle: v.electionId?.title || 'State Assembly Election',
+        constituency: v.constituency,
+        votedAt: v.createdAt,
+        referenceNumber: `TEL-DEMO-VOTE-${v._id.toString().slice(-6).toUpperCase()}`
+      })),
+      recentUsers
     };
   }
 
   async getActivityFeed() {
-    // Generate an activity feed by fetching recent items from multiple collections
-    // and mapping them into a uniform structure, then sorting them manually.
-    
-    const limit = 5;
-    
-    const recentElections = await Election.find().sort({ updatedAt: -1 }).limit(limit);
-    const recentCandidates = await Candidate.find().sort({ updatedAt: -1 }).limit(limit);
-    const recentVotes = await Vote.find().sort({ votedAt: -1 }).limit(limit);
-    const recentCitizens = await Citizen.find().sort({ verifiedAt: -1 }).limit(limit); // assuming createdAt or verifiedAt
-
-    let activities = [];
-
-    recentElections.forEach(e => {
-      activities.push({
-        type: e.createdAt.getTime() === e.updatedAt.getTime() ? 'Election Created' : `Election Updated to ${e.status}`,
-        description: `Election '${e.title}' in ${e.constituency}`,
-        timestamp: e.updatedAt,
-      });
-    });
-
-    recentCandidates.forEach(c => {
-      activities.push({
-        type: c.createdAt.getTime() === c.updatedAt.getTime() ? 'Candidate Added' : 'Candidate Updated',
-        description: `Candidate '${c.fullName}' for party ${c.partyName}`,
-        timestamp: c.updatedAt,
-      });
-    });
-
-    recentVotes.forEach(v => {
-      activities.push({
-        type: 'Vote Cast',
-        description: `A vote was cast in ${v.constituency}`,
-        timestamp: v.votedAt || v.createdAt,
-      });
-    });
-
-    recentCitizens.forEach(c => {
-      activities.push({
-        type: 'Citizen Verified',
-        description: `A citizen verified their identity`,
-        timestamp: c.updatedAt || c.createdAt,
-      });
-    });
-
-    // Sort combined feed by timestamp descending
-    activities.sort((a, b) => b.timestamp - a.timestamp);
-    
-    return activities.slice(0, 15); // Return top 15 recent activities
+    const recentVotes = await Vote.find().populate('electionId', 'title constituency').sort({ createdAt: -1 }).limit(8);
+    return recentVotes.map(v => ({
+      action: 'VOTE_RECORDED',
+      description: `Encrypted ballot recorded in constituency: ${v.constituency}`,
+      timestamp: v.createdAt,
+      reference: `TEL-DEMO-VOTE-${v._id.toString().slice(-6).toUpperCase()}`
+    }));
   }
 }
 

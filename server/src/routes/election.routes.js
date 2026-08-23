@@ -2,17 +2,34 @@ import express from 'express';
 import electionController from '../controllers/election.controller.js';
 import { electionValidator, updateStatusValidator } from '../validators/election.validator.js';
 import validate from '../middlewares/validate.js';
-import { protect, authorize } from '../middlewares/auth.middleware.js';
+import { protect, authorize, optionalProtect } from '../middlewares/auth.middleware.js';
 import asyncHandler from '../utils/asyncHandler.js';
 
 const router = express.Router();
 
-// Apply JWT protection to all routes
-router.use(protect);
+// Public / Citizen GET routes (with optional user context)
+router.get(
+  '/active',
+  optionalProtect,
+  asyncHandler(electionController.getActiveElection)
+);
 
-// Admin-only routes
+router.get(
+  '/',
+  optionalProtect,
+  asyncHandler(electionController.getAllElections)
+);
+
+router.get(
+  '/:id',
+  optionalProtect,
+  asyncHandler(electionController.getElectionById)
+);
+
+// Admin-only mutation routes
 router.post(
   '/',
+  protect,
   authorize('admin'),
   electionValidator,
   validate,
@@ -21,14 +38,16 @@ router.post(
 
 router.put(
   '/:id',
+  protect,
   authorize('admin'),
-  electionValidator, // Assuming we validate the full payload on update too
+  electionValidator,
   validate,
   asyncHandler(electionController.updateElection)
 );
 
 router.patch(
   '/:id/status',
+  protect,
   authorize('admin'),
   updateStatusValidator,
   validate,
@@ -37,25 +56,9 @@ router.patch(
 
 router.delete(
   '/:id',
+  protect,
   authorize('admin'),
   asyncHandler(electionController.deleteElection)
-);
-
-// Authenticated user routes (GET)
-// Note: /active must be defined before /:id to prevent 'active' being treated as an id parameter.
-router.get(
-  '/active',
-  asyncHandler(electionController.getActiveElection)
-);
-
-router.get(
-  '/',
-  asyncHandler(electionController.getAllElections)
-);
-
-router.get(
-  '/:id',
-  asyncHandler(electionController.getElectionById)
 );
 
 export default router;

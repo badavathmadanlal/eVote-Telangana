@@ -2,6 +2,7 @@ import app from './app.js';
 import connectDB from './config/db.js';
 import envConfig from './config/env.js';
 import MESSAGES from './constants/messages.js';
+import seedService from './services/seed.service.js';
 import logger from './utils/logger.js';
 
 const startServer = async () => {
@@ -9,6 +10,7 @@ const startServer = async () => {
     logger.info(MESSAGES.SERVER.STARTING);
 
     await connectDB();
+    await seedService.seedAllDemoData().catch(err => logger.error('Seed Error', { error: err.message }));
 
     const server = app.listen(envConfig.PORT, () => {
       logger.info(MESSAGES.SERVER.RUNNING(envConfig.PORT));

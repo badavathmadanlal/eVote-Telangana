@@ -1,4 +1,4 @@
-﻿export const te = {
+export const te = {
   nav: {
     home: "హోమ్",
     about: "మా గురించి",
@@ -213,6 +213,21 @@
     totalVotesCast: "మొత్తం పోలైన ఓట్లు",
     activeElectionsCount: "ప్రస్తుత ఎన్నికలు",
     turnoutRate: "ఓటింగ్ శాతం"
+  },
+  sidebar: {
+    dashboard: "డాష్‌బోర్డ్",
+    voters: "ఓటర్లు",
+    elections: "ఎన్నికలు",
+    candidates: "అభ్యర్థులు",
+    liveVoting: "ప్రత్యక్ష ఓటింగ్",
+    results: "ఫలితాలు",
+    announcements: "ప్రకటనలు",
+    auditLogs: "ఆడిట్ లాగ్స్",
+    votingHistory: "ఓటింగ్ చరిత్ర",
+    verification: "ధృవీకరణ",
+    profile: "ప్రొఫైల్",
+    publicSite: "ప్రజా వెబ్‌సైట్",
+    signOut: "లాగ్ అవుట్"
   }
 };
 export default te;

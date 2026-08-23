@@ -10,9 +10,16 @@ const router = express.Router();
 // Apply JWT protection to all routes
 router.use(protect);
 
-// @route   POST /api/v1/votes/cast
+// @route   POST /api/v1/votes AND POST /api/v1/votes/cast
 // @desc    Cast a vote
 // @access  Private (Verified Voter)
+router.post(
+  '/',
+  castVoteValidator,
+  validate,
+  asyncHandler(voteController.castVote)
+);
+
 router.post(
   '/cast',
   castVoteValidator,
@@ -20,7 +27,7 @@ router.post(
   asyncHandler(voteController.castVote)
 );
 
-// @route   GET /api/v1/votes/me
+// @route   GET /api/v1/votes/me, /api/v1/votes/my-votes, /api/v1/votes
 // @desc    Get user's voting history
 // @access  Private (Voter)
 router.get(
@@ -28,11 +35,35 @@ router.get(
   asyncHandler(voteController.getMyVotes)
 );
 
+router.get(
+  '/my-votes',
+  asyncHandler(voteController.getMyVotes)
+);
+
+router.get(
+  '/',
+  asyncHandler(voteController.getMyVotes)
+);
+
+// @route   GET /api/v1/votes/check/:electionId
+// @desc    Check if user has already voted in this election
+// @access  Private (Voter)
+router.get(
+  '/check/:electionId',
+  asyncHandler(voteController.hasVoted)
+);
+
 // @route   GET /api/v1/votes/election/:electionId
 // @desc    Get raw election results
 // @access  Private (Admin Only)
 router.get(
   '/election/:electionId',
+  authorize('admin'),
+  asyncHandler(voteController.getElectionResults)
+);
+
+router.get(
+  '/election/:electionId/results',
   authorize('admin'),
   asyncHandler(voteController.getElectionResults)
 );
