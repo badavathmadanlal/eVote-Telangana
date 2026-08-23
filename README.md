@@ -16,6 +16,7 @@
 </p>
 
 <p align="center">
+  <a href="https://evote-india-portal.vercel.app"><b>🌐 Live App</b></a> •
   <a href="https://youtu.be/z5MCXY6QFm8"><b>🎥 View Demo</b></a> •
   <a href="https://github.com/badavathmadanlal/eVote-Telangana"><b>💻 GitHub Repo</b></a> •
   <a href="https://www.linkedin.com/in/badavathmadanlal/"><b>👨‍💻 Author</b></a>
