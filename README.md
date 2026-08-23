@@ -1,315 +1,211 @@
-# 🗳️ Remote Voting System
+<div align="center">
 
-An enterprise-grade, full-stack remote voting platform built with modern web technologies. Designed for secure, transparent, and accessible digital elections.
+# 🗳️ eVoter
 
----
+### Secure • State-Aware • Multi-Election Digital Voting
 
-## 📋 Table of Contents
+A modern full-stack remote voting platform designed as an academic
+demonstration of secure authentication, citizen verification,
+state-aware election authorization, secret-ballot workflows,
+AI assistance, analytics, and responsive digital election access.
 
-- [Overview](#overview)
-- [Technology Stack](#technology-stack)
-- [Project Structure](#project-structure)
-- [Prerequisites](#prerequisites)
-- [Getting Started](#getting-started)
-- [Environment Variables](#environment-variables)
-- [Available Scripts](#available-scripts)
-- [API Documentation](#api-documentation)
-- [Architecture](#architecture)
-- [Contributing](#contributing)
-- [License](#license)
+<br>
 
----
+![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-8-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-18%2B-339933?style=for-the-badge&logo=node.js&logoColor=white)
+![Express](https://img.shields.io/badge/Express.js-Backend-000000?style=for-the-badge&logo=express&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-Database-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
 
-## Overview
+<br>
 
-The Remote Voting System enables organizations to conduct secure remote elections. It features:
+![Security](https://img.shields.io/badge/Security-Audited-00C853?style=for-the-badge)
+![Multi State](https://img.shields.io/badge/States-6-FF9933?style=for-the-badge)
+![Responsive](https://img.shields.io/badge/UI-Responsive-2962FF?style=for-the-badge)
+![AI](https://img.shields.io/badge/AI%20%2F%20RAG-Enabled-8E44AD?style=for-the-badge)
 
-- **Secure Authentication** — JWT-based auth with bcrypt password hashing
-- **Election Management** — Create, configure, and manage elections
-- **Real-time Voting** — Cast votes securely with double-vote prevention
-- **Result Analytics** — View election results with visual analytics
-- **Role-based Access** — Admin, Voter, and Election Officer roles
-- **Audit Trail** — Complete logging and audit capabilities
+<br><br>
 
----
+> **eVoter is an academic remote voting platform demonstrating how a
+> modern digital election experience can be designed around
+> authentication, verification, privacy, authorization and usability.**
 
-## Technology Stack
-
-### Frontend
-| Technology       | Purpose                    |
-|----------------- |--------------------------- |
-| React 19         | UI library                 |
-| Vite             | Build tool & dev server    |
-| Tailwind CSS 3   | Utility-first CSS          |
-| React Router DOM | Client-side routing        |
-| Axios            | HTTP client                |
-
-### Backend
-| Technology       | Purpose                    |
-|----------------- |--------------------------- |
-| Node.js          | Runtime environment        |
-| Express          | Web framework              |
-| MongoDB          | NoSQL database             |
-| Mongoose         | ODM for MongoDB            |
-
-### Security & Auth
-| Technology       | Purpose                    |
-|----------------- |--------------------------- |
-| JWT              | Token-based authentication |
-| bcrypt           | Password hashing           |
-| Helmet           | HTTP security headers      |
-| CORS             | Cross-origin policy        |
-| express-rate-limit | Rate limiting            |
-| xss-clean        | XSS protection             |
-
-### Dev Tools
-| Technology       | Purpose                    |
-|----------------- |--------------------------- |
-| ESLint           | Code linting               |
-| Prettier         | Code formatting            |
-| Morgan           | HTTP request logging       |
-| dotenv           | Environment variables      |
+</div>
 
 ---
 
-## Project Structure
+# 📖 Table of Contents
 
-```
-RemoteVotingSystem/
-├── client/                     # React Frontend
-│   ├── public/                 # Static assets
-│   ├── src/
-│   │   ├── assets/             # Images, fonts, icons
-│   │   ├── components/         # Reusable UI components
-│   │   ├── constants/          # App-wide constants
-│   │   ├── context/            # React Context providers
-│   │   ├── hooks/              # Custom React hooks
-│   │   ├── layouts/            # Page layout components
-│   │   ├── pages/              # Route page components
-│   │   ├── routes/             # Route configuration
-│   │   ├── services/           # API service layer
-│   │   ├── styles/             # Global styles & Tailwind
-│   │   └── utils/              # Utility functions
-│   ├── .env                    # Environment variables
-│   ├── index.html              # HTML entry point
-│   ├── tailwind.config.js      # Tailwind configuration
-│   └── vite.config.js          # Vite configuration
-│
-├── server/                     # Node.js Backend
-│   ├── src/
-│   │   ├── config/             # App configuration
-│   │   ├── constants/          # Constants & enums
-│   │   ├── controllers/        # Route handlers
-│   │   ├── middlewares/        # Express middleware
-│   │   ├── models/             # Mongoose models
-│   │   ├── repositories/       # Data access layer
-│   │   ├── routes/             # API route definitions
-│   │   ├── services/           # Business logic
-│   │   ├── utils/              # Utility functions
-│   │   └── validators/         # Request validation
-│   ├── logs/                   # Application logs
-│   ├── .env                    # Environment variables
-│   └── package.json            # Backend dependencies
-│
-├── database/                   # Database documentation
-├── docs/                       # Project documentation
-├── .gitignore                  # Git ignore rules
-└── README.md                   # This file
-```
+- [About eVoter](#-about-evoter)
+- [Project Highlights](#-project-highlights)
+- [Core Features](#-core-features)
+- [Voting Workflow](#-voting-workflow)
+- [Multi-Election Authorization](#-multi-election-authorization)
+- [Supported States](#-supported-states)
+- [AI Election Assistant](#-ai-election-assistant)
+- [Security Architecture](#-security-architecture)
+- [Application Screenshots](#-application-screenshots)
+- [Technology Stack](#-technology-stack)
+- [System Architecture](#-system-architecture)
+- [Project Structure](#-project-structure)
+- [Prerequisites](#-prerequisites)
+- [Local Installation](#-local-installation)
+- [Environment Configuration](#-environment-configuration)
+- [Available Scripts](#-available-scripts)
+- [API Overview](#-api-overview)
+- [Testing & Verification](#-testing--verification)
+- [Demo Video](#-demo-video)
+- [Project Documentation](#-project-documentation)
+- [Academic Disclaimer](#-academic-disclaimer)
+- [Future Roadmap](#-future-roadmap)
+- [Contributing](#-contributing)
+- [License](#-license)
 
 ---
 
-## Prerequisites
+# 🗳️ About eVoter
 
-Before you begin, ensure you have the following installed:
+**eVoter** is a full-stack remote voting system created to demonstrate
+a complete digital election workflow from citizen authentication to
+ballot submission, voting receipt generation and results visualization.
 
-- **Node.js** >= 18.x — [Download](https://nodejs.org/)
-- **MongoDB** >= 6.x — [Download](https://www.mongodb.com/try/download/community) or use [MongoDB Atlas](https://www.mongodb.com/atlas)
-- **Git** — [Download](https://git-scm.com/)
+The platform combines:
 
----
+- Secure citizen authentication
+- OTP-based verification
+- Electoral roll / KYC verification
+- State-aware election authorization
+- Multiple independent active elections
+- Candidate and party information
+- Secret-ballot-oriented voting workflow
+- Duplicate-vote prevention
+- Voting history
+- PDF voting receipts
+- Election results and analytics
+- AI election assistance
+- Retrieval-Augmented Generation (RAG)
+- Multi-language support
+- Responsive citizen and administrator interfaces
 
-## Getting Started
-
-### 1. Clone the Repository
-
-```bash
-git clone <repository-url>
-cd RemoteVotingSystem
-```
-
-### 2. Backend Setup
-
-```bash
-# Navigate to server directory
-cd server
-
-# Install dependencies
-npm install
-
-# Create environment file
-cp .env.example .env
-# Edit .env with your configuration
-
-# Start the development server
-npm run dev
-```
-
-**What each command does:**
-- `npm install` — Installs all backend dependencies listed in `package.json`
-- `cp .env.example .env` — Creates your local environment file from the template
-- `npm run dev` — Starts the Express server with `--watch` flag for auto-restart on file changes
-
-### 3. Frontend Setup
-
-```bash
-# Navigate to client directory (from project root)
-cd client
-
-# Install dependencies
-npm install
-
-# Start the development server
-npm run dev
-```
-
-**What each command does:**
-- `npm install` — Installs all frontend dependencies including React, Vite, and Tailwind CSS
-- `npm run dev` — Starts the Vite development server with Hot Module Replacement (HMR)
-
-### 4. Access the Application
-
-- **Frontend**: http://localhost:5173
-- **Backend API**: http://localhost:5000
-- **Health Check**: http://localhost:5000/api/health
+The project is designed primarily for **academic demonstration,
+software engineering evaluation and portfolio presentation**.
 
 ---
 
-## Environment Variables
+# ✨ Project Highlights
 
-### Backend (`server/.env`)
-
-| Variable              | Description                          | Default                              |
-|---------------------- |------------------------------------- |------------------------------------- |
-| `NODE_ENV`            | Environment mode                     | `development`                        |
-| `PORT`                | Server port                          | `5000`                               |
-| `MONGO_URI`           | MongoDB connection string            | `mongodb://localhost:27017/remote_voting_system` |
-| `JWT_SECRET`          | JWT signing secret                   | —                                    |
-| `JWT_EXPIRE`          | JWT expiration duration              | `7d`                                 |
-| `CORS_ORIGIN`         | Allowed CORS origin                  | `http://localhost:5173`              |
-| `RATE_LIMIT_WINDOW_MS`| Rate limit window (milliseconds)    | `900000` (15 min)                    |
-| `RATE_LIMIT_MAX`      | Max requests per window              | `100`                                |
-
-### Frontend (`client/.env`)
-
-| Variable              | Description                          | Default                              |
-|---------------------- |------------------------------------- |------------------------------------- |
-| `VITE_API_BASE_URL`   | Backend API base URL                 | `http://localhost:5000/api`          |
-| `VITE_APP_NAME`       | Application display name             | `Remote Voting System`               |
+| Capability | Implementation |
+|---|---|
+| 🔐 Authentication | JWT-based authentication with bcrypt password hashing |
+| 📱 OTP | Six-digit OTP verification flow |
+| 🪪 KYC | Citizen electoral verification workflow |
+| 🗳️ Voting | Election-specific ballot submission |
+| 🔒 Vote Integrity | Duplicate voting prevention |
+| 🌎 State Isolation | Strict state-level election authorization |
+| 🏛️ Multi-Election | Independent voting across active election tiers |
+| 🧾 Receipt | PDF voting receipt generation |
+| 📜 History | Election-specific participation history |
+| 📊 Results | Interactive election results and turnout analytics |
+| 🤖 AI | Election assistant with live election information |
+| 🧠 RAG | Controlled election knowledge base |
+| 🌐 Languages | English, Telugu, Hindi, Tamil, Marathi and Assamese |
+| 📱 Responsive | Desktop, tablet and mobile layouts |
+| 🛡️ Security | Rate limiting, validation, Helmet and authorization controls |
 
 ---
 
-## Available Scripts
+# 🚀 Core Features
 
-### Backend (`server/`)
+## 🔐 Secure Authentication
 
-| Command           | Description                                    |
-|------------------ |----------------------------------------------- |
-| `npm run dev`     | Start server with auto-restart (development)   |
-| `npm start`       | Start server (production)                      |
-| `npm run lint`    | Run ESLint                                     |
-| `npm run lint:fix`| Run ESLint with auto-fix                       |
-| `npm run format`  | Format code with Prettier                      |
-
-### Frontend (`client/`)
-
-| Command           | Description                                    |
-|------------------ |----------------------------------------------- |
-| `npm run dev`     | Start Vite dev server with HMR                 |
-| `npm run build`   | Build for production                           |
-| `npm run preview` | Preview production build                       |
-| `npm run lint`    | Run ESLint                                     |
+- Citizen authentication
+- Administrator authentication
+- JWT session management
+- HttpOnly cookie support
+- Bearer token verification
+- bcrypt password hashing
+- Password reset workflow
+- Role-based authorization
 
 ---
 
-## API Documentation
+## 📱 OTP Verification
 
-### Health Check
+The platform supports a six-digit OTP verification workflow.
 
-```
-GET /api/health
-```
+The project also contains configurable SMS-provider support for
+demonstration and deployment environments.
 
-**Response:**
-```json
-{
-  "success": true,
-  "statusCode": 200,
-  "message": "Server is healthy",
-  "data": {
-    "uptime": 123.456,
-    "environment": "development",
-    "timestamp": "2026-01-01T00:00:00.000Z"
-  },
-  "timestamp": "2026-01-01T00:00:00.000Z"
-}
-```
+Supported provider configuration includes:
 
-### Standard API Response Format
+- Fast2SMS
+- Twilio
+- MSG91
+- Mock/demo mode
 
-**Success:**
-```json
-{
-  "success": true,
-  "statusCode": 200,
-  "message": "Operation completed successfully",
-  "data": {},
-  "timestamp": "2026-01-01T00:00:00.000Z"
-}
-```
-
-**Error:**
-```json
-{
-  "success": false,
-  "statusCode": 400,
-  "message": "Validation failed",
-  "errors": ["Field 'email' is required"],
-  "timestamp": "2026-01-01T00:00:00.000Z"
-}
-```
+Production credentials are intentionally excluded from the repository.
 
 ---
 
-## Architecture
+## 🪪 Citizen Verification
 
-This project follows a **layered architecture** pattern:
+Citizens can complete an electoral verification workflow using
+registered identity information.
 
-```
-Routes → Controllers → Services → Repositories → Models
-```
-
-Each layer has a single responsibility:
-- **Routes** define API endpoints
-- **Controllers** handle HTTP request/response
-- **Services** contain business logic
-- **Repositories** abstract database operations
-- **Models** define data schemas
-
-For detailed architecture documentation, see [docs/architecture.md](docs/architecture.md).
+The verification layer validates the citizen against the configured
+electoral data before allowing access to the voting workflow.
 
 ---
 
-## Contributing
+# 🗳️ Voting Workflow
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+The complete citizen voting journey is designed as:
 
----
-
-## License
-
-This project is licensed under the MIT License.
+```text
+┌─────────────────────┐
+│       HOME          │
+└──────────┬──────────┘
+           ↓
+┌─────────────────────┐
+│       LOGIN         │
+└──────────┬──────────┘
+           ↓
+┌─────────────────────┐
+│   OTP VERIFICATION  │
+└──────────┬──────────┘
+           ↓
+┌─────────────────────┐
+│    KYC / VERIFY     │
+└──────────┬──────────┘
+           ↓
+┌─────────────────────┐
+│ ACTIVE ELECTIONS    │
+└──────────┬──────────┘
+           ↓
+┌─────────────────────┐
+│ ELECTION DETAILS    │
+└──────────┬──────────┘
+           ↓
+┌─────────────────────┐
+│ CANDIDATE / BALLOT  │
+└──────────┬──────────┘
+           ↓
+┌─────────────────────┐
+│   CONFIRM VOTE      │
+└──────────┬──────────┘
+           ↓
+┌─────────────────────┐
+│    VOTE SUCCESS     │
+└──────────┬──────────┘
+           ↓
+┌─────────────────────┐
+│   PDF RECEIPT       │
+└──────────┬──────────┘
+           ↓
+┌─────────────────────┐
+│  VOTING HISTORY     │
+└──────────┬──────────┘
+           ↓
+┌─────────────────────┐
+│   ELECTION RESULTS  │
+└─────────────────────┘
